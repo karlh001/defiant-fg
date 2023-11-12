@@ -20,7 +20,7 @@ import (
 func iterate(path string) {
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
         if err != nil {
-            log.Fatalf(err.Error())
+            log.Println("error:", err.Error())
 			return nil
         }
         
@@ -36,11 +36,11 @@ func iterate(path string) {
 				// hash.go
 				file_hash := hash_function(path)
 
-				log.Println(path, file_hash)
+				log.Println("done:", path, file_hash)
 
 			} else {
-
-				log.Println("error: ", path)
+				// Does not exist log error
+				log.Println("error:", path)
 			}
 
 		return nil
