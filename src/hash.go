@@ -32,13 +32,13 @@ func hash_function(file_to_run string) string {
 	
 	// Error checking during hash
 	if err != nil {
-		log.Fatal(err)
+		log.Println("skip:", file_to_run, err)
 	}
 	defer f.Close()
 
 	h := sha256.New()
-		if _, err := io.Copy(h, f); err != nil {
-		log.Fatal(err)
+	if _, err := io.Copy(h, f); err != nil {
+		log.Println("skip:", file_to_run, err)
 	}
 
 	// Put the hash into variable to return
