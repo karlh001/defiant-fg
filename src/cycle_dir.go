@@ -17,7 +17,11 @@ import (
 )
 
 
-func iterate(path string) {
+func iterate(path string, path_count int) {
+
+	// This function will cycle through the directory and print
+	// files and directories
+
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
         if err != nil {
             log.Println("error:", err.Error())
@@ -28,22 +32,22 @@ func iterate(path string) {
 		// if Dir, will look like
 		// pathpath with same name added on top
 		// is_dir.go
-		is_dir := dir_exists(path)
+		is_dir := is_file(path)
 
+		// Remove full path for db entry
+		short_path := path[path_count:] 
+		
 			if is_dir == 1 {
 
 				// Feed the path and file through the hash function
+				// This will return the hash value
 				// hash.go
 				file_hash := hash_function(path)
 
-				log.Println("done:", path, file_hash)
+				log.Println("done:", short_path, file_hash)
 
-			} else {
-				// Does not exist log error
-				log.Println("error:", path)
 			}
 
 		return nil
     })
-
 }

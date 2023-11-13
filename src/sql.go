@@ -1,27 +1,37 @@
 package main
 
-// github.com/mattn/go-sqlite3
-
 import (
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"log"
-	"os"
-  )
-  
+    "database/sql"
+    "log"
+    _ "github.com/mattn/go-sqlite3"
+)
 
-func main() {
+// If database does not exist create new function
+func create_new() {
+	db, err := sql.Open("sqlite3", "test.db")
 
-	db, err := gorm.Open(sqlite.Open("/home/karl/go/projects/khb/src/test.db"), &gorm.Config{})
-	
-	// If there is an error, report to user
-	if err != nil {
-		log.Fatalf("db error", err)
-		os.Exit(1)
-	}
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	log.Println("done", db)
+    defer db.Close()
 
+	// Write to database
+    sts := `
+CREATE TABLE IF NOT EXISTS objects(id INTEGER PRIMARY KEY, path TEXT, hash TEXT);
+`
+    _, err = db.Exec(sts)
+
+    if err != nil {
+        log.Fatal(err)
+    }
 }
 
+func add_file() {
 
+	
+		// need to cycle through array to add these in one
+		// go after run through
+
+		
+}

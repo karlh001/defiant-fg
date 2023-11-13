@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"log"
+	"unicode/utf8"
 
 )
 
@@ -19,13 +20,35 @@ func main() {
 
 	fmt.Println("Weclome to KHBackup", ver_number)
 
-	path := "/media/karl/MassStor/test/"
+	path := "/media/karl/MassStor/test/ag/"
+
+	// Do checks on path
+	// Does it end with /
+	slash_check := path[len(path)-1:]
+
+	if slash_check != "/" {
+		// Add the slash at the end of string
+		slash_check = slash_check + "/"
+		log.Println("info: added trailing slash to path", path + "/")
+	} 
+
+	// Count the full path length provided to get to the 
+	// working directory. Later used as shortened path to 
+	// save into SQL database so that directory can move
+	// round and be easily worked with
+	path_count := utf8.RuneCountInString(path)
+
+	// Grab the first x characters for path
+	//full_path := path[0:path_count]
+	// To remove the full path use:
+	// short_path[path_count:]
+
 
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
 		// Run through directory
 		// cycle_dir.go
-		iterate(path)
+		iterate(path, path_count)
 	} else {
 		// Does not exist
 		// Quit application
