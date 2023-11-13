@@ -20,7 +20,8 @@ func main() {
 
 	fmt.Println("Weclome to KHBackup", ver_number)
 
-	path := "/media/karl/MassStor/test/ag/"
+	// Get user argument
+	path := "/media/karl/MassStor/test/output/"
 
 	// Do checks on path
 	// Does it end with /
@@ -44,16 +45,36 @@ func main() {
 	// short_path[path_count:]
 
 
+	// Check if there is a database file
+	db_exist := is_file(path + "datafile.db")
+
+	if db_exist == 0 {
+		// No database exists so create one
+		db_output := create_database(path)
+		if db_output == 0 {
+			log.Println("info: database file created")
+		} else {
+			// For some reason database does not exist
+			// Report error to the user and exit
+			// Unable to continue with the program without db file
+			log.Println("error: could not create database file. Can I write to this directory?")
+			os.Exit(1)
+		}
+		
+	}
+
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
 		// Run through directory
 		// cycle_dir.go
 		iterate(path, path_count)
+
 	} else {
 		// Does not exist
 		// Quit application
 		log.Println("Error: directory does not exist")
 		os.Exit(1)
+
 	}
 	
 }
