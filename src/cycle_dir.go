@@ -62,9 +62,12 @@ func iterate(path string, path_count int) {
 				// Output result to log
 				log.Println("new:", short_path, file_hash)
 
-			}
+			}		
 
 		return nil
     })
+
+	// Send map of new files to insert SQL function
+	write_files_sql(path, hashmap)
 
 }
