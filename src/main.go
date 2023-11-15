@@ -21,7 +21,7 @@ func main() {
 	fmt.Println("Weclome to KHBackup", ver_number)
 
 	// Get user argument
-	path := "/media/karl/MassStor/test/output/"
+	path := "/media/karl/MassStor/test/sj/"
 
 	// Do checks on path
 	// Does it end with /
@@ -42,7 +42,7 @@ func main() {
 	// Grab the first x characters for path
 	//full_path := path[0:path_count]
 	// To remove the full path use:
-	// short_path[path_count:]
+	short_path := path[path_count:]
 
 
 	// Check if there is a database file
@@ -60,13 +60,13 @@ func main() {
 			log.Println("error: could not create database file. Can I write to this directory?")
 			os.Exit(1)
 		}
-		
 	}
 
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
 		// Run through directory
 		// cycle_dir.go
+		log.Println("info: scanning directorty:", path)
 		iterate(path, path_count)
 
 	} else {
@@ -76,5 +76,10 @@ func main() {
 		os.Exit(1)
 
 	}
+
+	// Run a scan to check for missing files
+	log.Println("info: checking for missing files")
+	missing_files_scan(path, short_path)
 	
+	log.Println("info: finished")
 }
