@@ -44,11 +44,10 @@ func main() {
 	// To remove the full path use:
 	short_path := path[path_count:]
 
+	log.Fatal(short_path)
 
 	// Check if there is a database file
-	db_exist := is_file(path + "datafile.db")
-
-	if db_exist == 0 {
+	if is_file(path + "datafile.db") == 0 {
 		// No database exists so create one
 		db_output := create_database(path)
 		if db_output == 0 {

@@ -42,9 +42,6 @@ func iterate(path string, path_count int) {
 		// is_dir.go
 		is_dir := is_file(path)
 
-		// Remove full path for db entry
-		short_path := path[path_count:] 
-		
 		// Feed the path and file through the hash function
 		// This will return the hash value
 		// hash.go
@@ -53,13 +50,13 @@ func iterate(path string, path_count int) {
 		// Check database to see if we have seen this 
 		// file before; need to use the short path
 		// because it's the short path stored in sql
-		//file_check_result := check_file_sql(short_path, path)
+		file_check_result := check_file_sql(short_path, path)
 
 		// Runs this if statement if
 		// is a file, not directory AND
 		// file is not already known from db
-		//if is_dir == 1 && file_check_result == 1 {
-		if is_dir == 1 {
+		if is_dir == 1 && file_check_result == 1 {
+		//if is_dir == 1 {
 
 			// Add file with hash to the map
 			// This will be sent later to insert
