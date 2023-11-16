@@ -183,7 +183,7 @@ func check_file_sql(short_path string, full_path string) int {
 }
 
 // Query database and check files are still present
-func missing_files_scan(full_path string, short_path string) int {
+func missing_files_scan(full_path string, path_count int) int {
 
     return 0
 

@@ -20,8 +20,12 @@ import (
 )
 
 
-func iterate(path string, path_count int) {
+func iterate(path string, path_count int) int {
 
+	// Inputs
+	// path is full path to file; e.g. /dir/hello-world.txt
+	// short_path is dir after or just file name
+	// e.g. hello-world.txt
 	// Create a map to store data
 	hashmap := map[string]string{}
 
@@ -31,32 +35,39 @@ func iterate(path string, path_count int) {
 	// output to the user
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 
+	log.Println("working on", path)
+
+		// Check for errors, and if short_path empty skip (liekly root dir)
         if err != nil {
             log.Println("error:", err.Error())
 			return nil
         }
-	
-		// Ask if the file now exist
-		// if Dir, will look like
-		// pathpath with same name added on top
-		// is_dir.go
-		is_dir := is_file(path)
 
 		// Feed the path and file through the hash function
 		// This will return the hash value
 		// hash.go
 		file_hash := hash_function(path)
+		
+
+		// Grab the first x characters for path
+		//full_path := path[0:path_count]
+		// To remove the full path use:
+		short_path := path[path_count:]
+
+		if short_path == "" || short_path == "datafile.db" {
+			return nil
+		}
 
 		// Check database to see if we have seen this 
 		// file before; need to use the short path
 		// because it's the short path stored in sql
-		file_check_result := check_file_sql(short_path, path)
+		//file_check_result := check_file_sql(short_path, path)
 
 		// Runs this if statement if
 		// is a file, not directory AND
 		// file is not already known from db
-		if is_dir == 1 && file_check_result == 1 {
-		//if is_dir == 1 {
+		//if is_file(path) == 1 && file_check_result == 1 {
+		if is_file(path) == 1 {
 
 			// Add file with hash to the map
 			// This will be sent later to insert
@@ -70,6 +81,8 @@ func iterate(path string, path_count int) {
 
 	// Send map of new files to insert SQL function
 	write_files_sql(path, hashmap)
+
+	return 1
 
 }
 

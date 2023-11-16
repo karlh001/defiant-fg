@@ -39,13 +39,6 @@ func main() {
 	// round and be easily worked with
 	path_count := utf8.RuneCountInString(path)
 
-	// Grab the first x characters for path
-	//full_path := path[0:path_count]
-	// To remove the full path use:
-	short_path := path[path_count:]
-
-	log.Fatal(short_path)
-
 	// Check if there is a database file
 	if is_file(path + "datafile.db") == 0 {
 		// No database exists so create one
@@ -78,7 +71,7 @@ func main() {
 
 	// Run a scan to check for missing files
 	log.Println("info: checking for missing files")
-	missing_files_scan(path, short_path)
+	missing_files_scan(path, path_count)
 	
 	log.Println("info: finished")
 }
