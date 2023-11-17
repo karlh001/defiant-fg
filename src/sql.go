@@ -15,7 +15,6 @@ import (
     _ "github.com/mattn/go-sqlite3"
     "time"
     "strings"
-    "runtime"
 )
 
 
@@ -75,10 +74,8 @@ func write_files_sql(path string, hashmap map[string]string) int {
     new_files_count := len(hashmap)
 
     // Warn user; if more than 10 warn this may take a while
-    if new_files_count > 10 {
-        log.Println("info: writing new files to database", new_files_count, "(this may take a while)")
-    } else {
-        log.Println("info: writing new files to database", new_files_count)
+    if new_files_count > 0 {
+       log.Println("info: writing new files to database", new_files_count)
     }
 
     // Loop through the hash map and insert into the
@@ -105,7 +102,9 @@ func write_files_sql(path string, hashmap map[string]string) int {
 
     }
 
-    log.Println("info: finished writing to database")
+    if new_files_count > 0 {
+        log.Println("info: finished writing to database")
+    }
 
     return 0
 
@@ -160,9 +159,7 @@ func check_file_sql(short_path string, full_path string, hash string) int {
         // Check the hash against the OS path and DB path
         if s_hash != hash {
 
-            var Red = "\033[31m"
-
-            log.Println("error: hash mismatch on ", full_path, short_path)
+            log.Println("error: failed hash on ", full_path + short_path)
             
         }
     

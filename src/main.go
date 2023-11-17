@@ -16,17 +16,26 @@ import (
 
 func main() {
 
-	ver_number := 0.1
+	var path string
 
-	fmt.Println("Weclome to KHBackup", ver_number)
+	fmt.Printf("Weclome to KHBackup ver 1.0\nChoose directory to scan: ")
+	fmt.Scan(&path)
 
 	// Get user argument
-	path := "/media/karl/MassStor/test/sj/"
+	//path = "/media/karl/MassStor/test/sj/"
 
 	// Do checks on path
 	// Does it end with /
 	slash_check := path[len(path)-1:]
-
+	
+	// Check the directory path if exists
+	if dir_exists(path) == 1 {
+		log.Println("info: scanning directory:", path)
+	} else {
+		// Does not exist
+		// Quit application
+		log.Fatal("Fatal: directory does not exist")
+	}
 	if slash_check != "/" {
 		// Add the slash at the end of string
 		slash_check = slash_check + "/"
@@ -54,20 +63,9 @@ func main() {
 		}
 	}
 
-	// Check the directory path if exists
-	if dir_exists(path) == 1 {
-		// Run through directory
-		// cycle_dir.go
-		log.Println("info: scanning directorty:", path)
-		iterate(path, path_count)
-
-	} else {
-		// Does not exist
-		// Quit application
-		log.Println("Error: directory does not exist")
-		os.Exit(1)
-
-	}
+	// Send path to function and cycle through all files
+	// and directories to generate hashes
+	iterate(path, path_count)
 
 	// Run a scan to check for missing files
 	log.Println("info: checking for missing files")
