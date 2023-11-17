@@ -15,7 +15,7 @@ import (
     _ "github.com/mattn/go-sqlite3"
     "time"
     "strings"
-    "unicode/utf8"
+    "runtime"
 )
 
 
@@ -115,70 +115,63 @@ func write_files_sql(path string, hashmap map[string]string) int {
 // Function to check if the file exists in the database
 // This function is called from the iterate function found in 
 // the files.go package
-func check_file_sql(short_path string, full_path string) int {
-
-    var output string
+func check_file_sql(short_path string, full_path string, hash string) int {
 
     // Check if first record, the given diectory
     if short_path == "" {
         return 0
     }
 
-
     // Get user input path by removing short_name
     // from the long path
-    file_name_count := utf8.RuneCountInString(short_path)
-    db_path := full_path[:file_name_count]
-
+    //file_name_count := utf8.RuneCountInString(short_path)
+    //db_path := full_path[:file_name_count]
+   // log.Println(db_path, "<<< path")
 
     // Open database
-    db, err := sql.Open("sqlite3", db_path + "datafile.db")
+    db, err := sql.Open("sqlite3", full_path + "datafile.db")
 
         if err != nil {
             log.Fatal("fatal: at db open, msg: ", err)
         }
 
-        
+    defer db.Close()   
+
     // Clean variable
     short_path = clean_string(short_path)
             
-    // Prepare the query here
-    // Searching for the short path against the path sent through function
-    // In case of duplications, the query will select the first record, 
-    // just in case of known hash changes
-    query, err := db.Prepare("SELECT * FROM objects WHERE path = '" + short_path + "' ORDER BY ID_object DESC LIMIT 1;")
-
-    // Look for SQL errors
-    // Otherwise, query later will not work
-    // Return 0 breaks and next file tried
-    if err != nil {
-        log.Println("error: could not query for file", err)
-        return 0
-    }
-
-   
-    defer query.Close()
        
-    // Execute query
-    err = query.QueryRow(short_path).Scan(&output)
+    rows, err := db.Query("SELECT path, hash FROM objects WHERE objects.path = ? ORDER BY objects.ID_object DESC LIMIT 1;", short_path)
 
-    // Catch errors from query
-    switch {
-        case err == sql.ErrNoRows:
-            // No record of the file in the db
-            // this means that during iteration the file
-            // found must be a new file
-            log.Println("info: new file:", short_path)
-            return 1
-        case err != nil:
-            log.Println("%s", err)
-            return 0
-        default:
-            log.Println("Counted %s \n", output)
-            return 0
-    }
+	if err != nil {
+		log.Fatal("fatal: db query error: ", err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var s_path string
+		var s_hash string
+		err = rows.Scan(&s_path, &s_hash)
+		if err != nil {
+			log.Println("fatal: SQL query error", err)
+		}
+		
+        // Check the hash against the OS path and DB path
+        if s_hash != hash {
+
+            var Red = "\033[31m"
+
+            log.Println("error: hash mismatch on ", full_path, short_path)
+            
+        }
     
-	return 0
+        return 0
+
+	}
+
+    
+	return 1
 
 }
 

@@ -28,14 +28,13 @@ func iterate(path string, path_count int) int {
 	// e.g. hello-world.txt
 	// Create a map to store data
 	hashmap := map[string]string{}
-
+	full_path := path
 	// This function will cycle through the directory and print
 	// files and directories.
 	// If there was an error, e.g. permissions, then error message
 	// output to the user
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 
-	log.Println("working on", path)
 
 		// Check for errors, and if short_path empty skip (liekly root dir)
         if err != nil {
@@ -61,13 +60,14 @@ func iterate(path string, path_count int) int {
 		// Check database to see if we have seen this 
 		// file before; need to use the short path
 		// because it's the short path stored in sql
-		//file_check_result := check_file_sql(short_path, path)
+		file_check_result := check_file_sql(short_path, full_path, file_hash)
 
 		// Runs this if statement if
 		// is a file, not directory AND
 		// file is not already known from db
-		//if is_file(path) == 1 && file_check_result == 1 {
-		if is_file(path) == 1 {
+		// if file_check_result returns 1, mean add to db
+		if is_file(path) == 1 && file_check_result == 1 {
+		//if is_file(path) == 1 {
 
 			// Add file with hash to the map
 			// This will be sent later to insert
