@@ -29,6 +29,7 @@ func iterate(path string, path_count int) int {
 	// Create a map to store data
 	hashmap := map[string]string{}
 	full_path := path
+
 	// This function will cycle through the directory and print
 	// files and directories.
 	// If there was an error, e.g. permissions, then error message
@@ -102,6 +103,8 @@ func is_file(path string) int {
 
 	return is_file_check
 }
+
+
 
 func dir_exists(path string) int {
 	var dir_exists_outcome int

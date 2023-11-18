@@ -78,8 +78,11 @@ func write_files_sql(path string, hashmap map[string]string) int {
        log.Println("info: writing new files to database", new_files_count)
     }
 
+
+
     // Loop through the hash map and insert into the
     // object table
+
     for key, value := range hashmap {
 
         // Remove the apostrophe if in file name
@@ -93,18 +96,20 @@ func write_files_sql(path string, hashmap map[string]string) int {
         // Build the SQL string
         sts := "INSERT INTO objects('ID_object','path','hash','ts','enabled') VALUES (NULL,'" + clean_key + "','" + value + "','" + timeStr + "',1);"
         
-
         // Error reporting
         _, err = db.Exec(sts)
         if err != nil {
             log.Println("error: cannot insert to data file, msg: ", err, "file:", key)
-        }
+        } 
 
     }
+
 
     if new_files_count > 0 {
-        log.Println("info: finished writing to database")
+        log.Println("info: database writes completed")
     }
+
+
 
     return 0
 
@@ -158,9 +163,7 @@ func check_file_sql(short_path string, full_path string, hash string) int {
 		
         // Check the hash against the OS path and DB path
         if s_hash != hash {
-
             log.Println("error: failed hash on ", full_path + short_path)
-            
         }
     
         return 0
