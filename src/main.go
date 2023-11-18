@@ -18,7 +18,7 @@ func main() {
 
 	var path string
 
-	fmt.Printf("Weclome to KHBackup ver 1.0\nChoose directory to scan: ")
+	fmt.Printf("Weclome to KHBackup ver 0.2\nChoose directory to scan: ")
 	fmt.Scan(&path)
 
 	// Get user argument
@@ -69,7 +69,7 @@ func main() {
 
 	// Run a scan to check for missing files
 	log.Println("info: checking for missing files")
-	missing_files_scan(path, path_count)
+	missing_files_scan(path)
 	
 	log.Println("info: finished")
 }

@@ -45,7 +45,7 @@ func create_database(path string) int {
         version	TEXT,
         author TEXT);
         INSERT INTO about("program","website","version","author")
-        VALUES ("KHBackup","http://karlhunter.co.uk/khb","0.1","Karl Hunter");
+        VALUES ("KHBackup","http://karlhunter.co.uk/khb","0.2","Karl Hunter");
         `
     _, err = db.Exec(sts)
 
@@ -84,7 +84,7 @@ func write_files_sql(path string, hashmap map[string]string) int {
 
         // Remove the apostrophe if in file name
         // this will prevent SQL error on insertion to db
-        clean_key := clean_string(key)
+        clean_key := clean_string(key, 1)
 
         // Timestamp
         now := time.Now()
@@ -137,7 +137,7 @@ func check_file_sql(short_path string, full_path string, hash string) int {
     defer db.Close()   
 
     // Clean variable
-    short_path = clean_string(short_path)
+    short_path = clean_string(short_path, 1)
             
        
     rows, err := db.Query("SELECT path, hash FROM objects WHERE objects.path = ? ORDER BY objects.ID_object DESC LIMIT 1;", short_path)
@@ -173,17 +173,68 @@ func check_file_sql(short_path string, full_path string, hash string) int {
 }
 
 // Query database and check files are still present
-func missing_files_scan(full_path string, path_count int) int {
+func missing_files_scan(full_path string) int {
+
+    // Iterate through directory using db records
+    // if exists, skip. If record in db but not file 
+    // If in db but not in directory structure, warn user
+
+     // Open database
+     db, err := sql.Open("sqlite3", full_path + "datafile.db")
+
+     if err != nil {
+         log.Fatal("fatal: at db open, msg: ", err)
+     }
+
+    defer db.Close()               
+            
+    rows, err := db.Query("SELECT path FROM objects WHERE objects.enabled = 1 ORDER BY objects.ID_object DESC;")
+
+    if err != nil {
+        log.Fatal("fatal: db query error: ", err)
+    }
+
+    defer rows.Close()
+
+    for rows.Next() {
+        var s_path string
+        err = rows.Scan(&s_path)
+
+        // Add back special characters
+        s_path = clean_string(s_path, 0)
+        // System path, path and s_path combined
+        sys_path := full_path + s_path
+
+        // Check if the file exists
+        // If not returns 0, the warn user
+        if is_file(sys_path) != 1 {
+            log.Println("missing:", s_path)
+        }
+
+        if err != nil {
+            log.Println("fatal: SQL query error", err)
+        }
+    }
 
     return 0
 
 }
 
 // Clean string
-func clean_string(filename string) string {
+func clean_string(filename string, do int) string {
 
-    filename = strings.Replace(filename, "'", "", -1)
-    filename = strings.Replace(filename, "<!", "", -1)
+    if do == 1 {
+        // Remove file characters
+        filename = strings.Replace(filename, "'", "xAPOSx", -1)
+        filename = strings.Replace(filename, "<!", "xBRACKx", -1)
+    } else if do == 0 {
+        filename = strings.Replace(filename, "xAPOSx", "'", -1)
+        filename = strings.Replace(filename, "xBRACKx", "<!", -1) 
+    } else {
+        // To be safe clean strings
+        filename = strings.Replace(filename, "'", "xAPOSx", -1)
+        filename = strings.Replace(filename, "<!", "xBRACKx", -1)
+    }
 
     return filename
     

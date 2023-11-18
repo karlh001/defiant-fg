@@ -96,6 +96,7 @@ func is_file(path string) int {
 		} else if errors.Is(err, os.ErrNotExist) {
 			is_file_check = 0
 		} else {
+			// Is a file
 			is_file_check = 1
 		}
 
