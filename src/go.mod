@@ -3,7 +3,6 @@ module karlhunter.co.uk/backup
 go 1.18
 
 require (
-	github.com/gosuri/uilive v0.0.4 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

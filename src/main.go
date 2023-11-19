@@ -11,15 +11,40 @@ import (
 	"os"
 	"log"
 	"unicode/utf8"
+	//"compress/gzip"
+	//"bufio"
+	//"io/ioutil"
 
 )
+
 
 func main() {
 
 	var path string
+	var choice int
 
-	fmt.Printf("Weclome to KHBackup ver 0.2\nChoose directory to scan: ")
-	fmt.Scan(&path)
+	fmt.Println("Weclome to DEFIANT-FG ver 0.3")
+	
+	fmt.Printf("[1] Scan a directory\n[2] About")
+	
+	fmt.Println("\nChoose an option")
+
+	fmt.Scan(&choice)
+
+	// Menu
+	switch choice {
+	case 1:
+		fmt.Println("Choose directory to scan:")
+		fmt.Scan(&path)
+		scan(path)
+	case 2:
+		about_info()
+	}
+		
+
+}
+
+func scan(path string) {
 
 	// Get user argument
 	//path = "/media/karl/MassStor/test/sj/"
@@ -70,6 +95,41 @@ func main() {
 	// Run a scan to check for missing files
 	log.Println("info: checking for missing files")
 	missing_files_scan(path)
-	
+
+	// Make backup
+	//backup_db(path)
+
 	log.Println("info: finished")
+
+}
+
+func backup_db(path string) {
+
+	// Get home dir
+	dirname, err := os.UserHomeDir()
+    if err != nil {
+        log.Println(err)
+    }
+
+	// Check backup dir exists
+
+	backup_dir := dirname + "/.defiantfg/backup"
+
+	err = os.MkdirAll(backup_dir, 0775)
+	if err != nil {
+		log.Println("error: could not create backup directory")
+	} else {
+		log.Println("info: db backup complete")
+	}
+
+	// Copy database file
+	// Compress
+
+}
+
+func about_info() {
+
+	// Information about the program
+	fmt.Printf("===\nDEFIANT File Guard (DEFIANT-FG)\nBy Karl Hunter\nhttps://karlhunter.co.uk/defiant/\nfg@karlhunter.co.uk\n===\n")
+
 }

@@ -34,6 +34,8 @@ func iterate(path string, path_count int) int {
 	// files and directories.
 	// If there was an error, e.g. permissions, then error message
 	// output to the user
+
+
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 
 
@@ -75,13 +77,35 @@ func iterate(path string, path_count int) int {
 			// into the database later
 			hashmap[short_path] = file_hash
 
-		}		
+			// Ask function whether there is a lock file
+			// If there is a lock, returns 1, otherwise 0
+			// means no lock file
+			db_working := db_lock(full_path, 0)
 
+			// Check size of hashmap
+			// if hash map greater than 9 and there
+			// is no database lock continue
+			// Or skip until the next cycle
+			if len(hashmap) > 9 && db_working == 0 {
+
+				// Send hash map to SQL writer
+				go write_files_sql(full_path, hashmap)
+
+				// Clear hash map for further files
+				hashmap = make(map[string]string)
+
+			}
+		}
+		
 		return nil
     })
 
 	// Send map of new files to insert SQL function
-	write_files_sql(path, hashmap)
+	// Check if any more files to write
+	write_files_sql(full_path, hashmap)
+
+	// Remove db lock
+	db_lock(full_path, 2)
 
 	return 1
 
