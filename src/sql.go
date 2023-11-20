@@ -22,7 +22,7 @@ import (
 
 // If database does not exist create new
 func create_database(path string) int {
-	db, err := sql.Open("sqlite3", path + "datafile.db")
+	db, err := sql.Open("sqlite3", path + "dfg.db")
 
     if err != nil {
         log.Fatal("fatal: could not connect to db", err)
@@ -62,7 +62,7 @@ func create_database(path string) int {
 // and write to the SQLite3 database file
 func write_files_sql(path string, hashmap map[string]string) int {
 
-    db, err := sql.Open("sqlite3", path + "datafile.db")
+    db, err := sql.Open("sqlite3", path + "dfg.db")
 
     if err != nil {
         log.Fatal("error: at db open, msg: ", err)
@@ -79,7 +79,7 @@ func write_files_sql(path string, hashmap map[string]string) int {
 
     // Warn user; if more than 10 warn this may take a while
     if new_files_count > 0 {
-       log.Println("info: writing new files to database", new_files_count)
+       log.Println("info: writing block of hashes to database", new_files_count)
     }
 
 
@@ -112,7 +112,7 @@ func write_files_sql(path string, hashmap map[string]string) int {
 
 
     // Unlock the database
-    db_lock(path, 0)
+    db_lock(path, 2)
 
     /*if new_files_count > 0 {
         log.Println("info: database writes completed")
@@ -140,7 +140,7 @@ func check_file_sql(short_path string, full_path string, hash string) int {
    // log.Println(db_path, "<<< path")
 
     // Open database
-    db, err := sql.Open("sqlite3", full_path + "datafile.db")
+    db, err := sql.Open("sqlite3", full_path + "dfg.db")
 
         if err != nil {
             log.Fatal("fatal: at db open, msg: ", err)
@@ -193,7 +193,7 @@ func missing_files_scan(full_path string) int {
     // If in db but not in directory structure, warn user
 
      // Open database
-     db, err := sql.Open("sqlite3", full_path + "datafile.db")
+     db, err := sql.Open("sqlite3", full_path + "dfg.db")
 
      if err != nil {
          log.Fatal("fatal: at db open, msg: ", err)
@@ -208,6 +208,7 @@ func missing_files_scan(full_path string) int {
 
     if err != nil {
         log.Fatal("fatal: db query error: ", err)
+        db_lock(full_path, 2)
     }
 
     defer rows.Close()
@@ -285,9 +286,15 @@ func db_lock(path string, status int) int {
         case 2:
 
             // Delete the lock file
-            err := os.Remove(write_lock)
-            if err != nil {
-                log.Println("error: could not delete database lock file")
+            db_file_exist := is_file(write_lock)
+            if db_file_exist == 1{
+
+                err := os.Remove(write_lock)
+                if err != nil {
+                    log.Println("error: could not delete database lock file")
+                }
+    
+
             }
 
     }

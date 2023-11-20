@@ -86,7 +86,7 @@ func iterate(path string, path_count int) int {
 			// if hash map greater than 9 and there
 			// is no database lock continue
 			// Or skip until the next cycle
-			if len(hashmap) > 9 && db_working == 0 {
+			if len(hashmap) > 999999 && db_working == 0 {
 
 				// Send hash map to SQL writer
 				go write_files_sql(full_path, hashmap)
