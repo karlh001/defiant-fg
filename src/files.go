@@ -5,8 +5,8 @@ directory.
 Returns 1 for directory, 0 for not (likely file)
 
 Karl Hunter 2023
-2023-11-12
-https://www.karlhunter.co.uk/go
+2023-11-19
+https://www.karlhunter.co.uk/defiant
 
 */
 
@@ -56,7 +56,7 @@ func iterate(path string, path_count int) int {
 		// To remove the full path use:
 		short_path := path[path_count:]
 
-		if short_path == "" || short_path == "datafile.db" {
+		if short_path == "" || short_path == "dfg.db" {
 			return nil
 		}
 
@@ -70,23 +70,25 @@ func iterate(path string, path_count int) int {
 		// file is not already known from db
 		// if file_check_result returns 1, mean add to db
 		if is_file(path) == 1 && file_check_result == 1 {
-		//if is_file(path) == 1 {
 
 			// Add file with hash to the map
 			// This will be sent later to insert
 			// into the database later
 			hashmap[short_path] = file_hash
 
+			// REMOVED DUE TO BUG - UNABLE TO WRITE AND READ
+			// AT THE SAME TIME. HELP NEEDED; PURPOSE TO SPEED
+			// UP DATABASE WRITES
 			// Ask function whether there is a lock file
 			// If there is a lock, returns 1, otherwise 0
 			// means no lock file
-			db_working := db_lock(full_path, 0)
+			//db_working := db_lock(full_path, 0)
 
 			// Check size of hashmap
 			// if hash map greater than 9 and there
 			// is no database lock continue
 			// Or skip until the next cycle
-			if len(hashmap) > 999999 && db_working == 0 {
+			/*if len(hashmap) > 999999 && db_working == 0 {
 
 				// Send hash map to SQL writer
 				go write_files_sql(full_path, hashmap)
@@ -94,7 +96,7 @@ func iterate(path string, path_count int) int {
 				// Clear hash map for further files
 				hashmap = make(map[string]string)
 
-			}
+			}*/
 		}
 		
 		return nil

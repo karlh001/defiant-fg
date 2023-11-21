@@ -6,7 +6,7 @@ the_hash := hash_function(file)
 
 Karl Hunter 2023
 2023-11-12
-https://www.karlhunter.co.uk/go
+https://www.karlhunter.co.uk/defiant
 
 */
 

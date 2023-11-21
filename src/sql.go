@@ -3,7 +3,7 @@ This mod connects to SQLite database
 
 Karl Hunter 2023
 2023-11-13
-https://www.karlhunter.co.uk/go
+https://www.karlhunter.co.uk/defiant
 
 */
 
@@ -46,7 +46,7 @@ func create_database(path string) int {
         version	TEXT,
         author TEXT);
         INSERT INTO about("program","website","version","author")
-        VALUES ("KHBackup","http://karlhunter.co.uk/khb","0.2","Karl Hunter");
+        VALUES ("DEFIANTFG","http://karlhunter.co.uk/defiant","0.5","Karl Hunter");
         `
     _, err = db.Exec(sts)
 
@@ -303,8 +303,12 @@ func db_lock(path string, status int) int {
 
 }
 
-// Clean string
+
 func clean_string(filename string, do int) string {
+
+    // To prevent SQL query errors, need to remove apostrophe 
+    // and <!. This function replaces them with xAPOSx so that
+    // the apostrope can be added back to check later.
 
     if do == 1 {
         // Remove file characters

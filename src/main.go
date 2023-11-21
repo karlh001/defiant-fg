@@ -1,6 +1,7 @@
 /* 
 First mod run by Go
 Main screen to accept user inputs
+https://karlhunter.co.uk/defiant
 */
 
 package main
@@ -17,18 +18,19 @@ import (
 
 )
 
+// Version and release date
+const ver string = "0.5"
+const rel_date string = "2023-11-21"
 
 func main() {
 
 	var path string
 	var choice int
 
-	fmt.Println("Weclome to DEFIANT-FG ver 0.4")
-	
+	// User vebrose printing
+	fmt.Println("Weclome to DEFIANT-FG ver", ver)
 	fmt.Printf("[1] Scan a directory\n[2] About")
-	
 	fmt.Println("\nChoose an option")
-
 	fmt.Scan(&choice)
 
 	// Menu
@@ -113,6 +115,7 @@ func scan(path string) {
 
 		// This directory has been scanned before, so run
 		// function and tell not to do the missing file scan
+		// 1 sent through function to say do not run missing files
 
 		start_scan(path, path_count, 1)
 
@@ -146,6 +149,14 @@ func start_scan(path string, path_count int, look_missing int) {
 
 
 func backup_db(path string) {
+
+	// BACKUP FEATURE NOT YET COMPLETED
+	// PLEASE HELP IF CAN
+	// WANT TO RUN AFTER SCAN, COMPRESS THE DATABASE AND 
+	// STORE ~/.defiant-fg/backup
+	// e.g. current working directory followed by db
+	// YYYYMMDDHHMM_pictures_dfg.db
+	// Cleaning perhaps keep last 5 copies
 
 	// Get home dir
 	dirname, err := os.UserHomeDir()
