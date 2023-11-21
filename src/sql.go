@@ -2,7 +2,7 @@
 This mod connects to SQLite database
 
 Karl Hunter 2023
-2023-11-13
+2023-11-21
 https://www.karlhunter.co.uk/defiant
 
 */
@@ -65,7 +65,7 @@ func write_files_sql(path string, hashmap map[string]string) int {
     db, err := sql.Open("sqlite3", path + "dfg.db")
 
     if err != nil {
-        log.Fatal("error: at db open, msg: ", err)
+        log.Fatal("error: Could not open db, msg: ", err)
         return 1
     }
 

@@ -19,7 +19,7 @@ import (
 )
 
 // Version and release date
-const ver string = "0.5"
+const ver string = "1.0"
 const rel_date string = "2023-11-21"
 
 func main() {
