@@ -25,22 +25,24 @@ const rel_date string = "2023-11-21"
 func main() {
 
 	var path string
-	var choice int
+	var choice string
 
 	// User vebrose printing
 	fmt.Println("Weclome to DEFIANT-FG ver", ver)
-	fmt.Printf("[1] Scan a directory\n[2] About")
+	fmt.Printf("[s] Scan a directory\n[a] About\n[q] Quit")
 	fmt.Println("\nChoose an option")
 	fmt.Scan(&choice)
 
 	// Menu
 	switch choice {
-	case 1:
+	case "s":
 		fmt.Println("Choose directory to scan:")
 		fmt.Scan(&path)
 		scan(path)
-	case 2:
+	case "a":
 		about_info()
+	case "q":
+		os.Exit(0)
 	}
 		
 

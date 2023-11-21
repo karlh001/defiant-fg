@@ -54,7 +54,7 @@ Run to test:
 
 Run the command-line too: 
 
-> fg --dir /path/dir/  
+	fg --dir /path/dir/  
 
 You choose a directory to scan. Let's say it's your pictures folder on an external hard drive located /mnt/hdd/Pictures/ 
 
