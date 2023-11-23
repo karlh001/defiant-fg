@@ -13,11 +13,13 @@ https://www.karlhunter.co.uk/defiant
 package main
 
 import (
+
 	"crypto/sha256"
 	"io"
 	"log"
 	"os"
 	"fmt"
+	
 )
 
 // Hash the file function
@@ -39,7 +41,14 @@ func hash_function(file_to_run string) string {
 	// The has function usng SHA-256
 	h := sha256.New()
 	if _, err := io.Copy(h, f); err != nil {
-		log.Println("skip:", err)
+		// Need to convert error to string to 
+		// check if standard error about dir, so
+		// we can ignore it. Only want to know about
+		// failed hashing on files.
+		var msg_error string
+		msg_error = fmt.Sprintf("%v", err)
+		msg_error = msg_error[9:]
+		if msg_error == "directory" { log.Println("skip:", err) }
 	}
 
 	// Put the hash into variable to return

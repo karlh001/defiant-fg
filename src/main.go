@@ -12,48 +12,48 @@ import (
 	"os"
 	"log"
 	"unicode/utf8"
-	//"compress/gzip"
-	//"bufio"
-	//"io/ioutil"
+	"flag"
+    "path/filepath"
 
 )
 
-// Version and release date
-const ver string = "1.0"
-const rel_date string = "2023-11-21"
+const app_ver string = "1.0"
+const app_date string = "2023-11-22"
+const db_name string = "dfg.db"
 
 func main() {
 
+	// variables declaration  
 	var path string
-	var choice string
+	version := false
+	skip := false
 
-	// User vebrose printing
-	fmt.Println("Weclome to DEFIANT-FG ver", ver)
-	fmt.Printf("[s] Scan a directory\n[a] About\n[q] Quit")
-	fmt.Println("\nChoose an option")
-	fmt.Scan(&choice)
+	// flags declaration using flag package
+	flag.StringVar(&path, "d", " ", "Specify directory")
+	flag.BoolVar(&version, "version", false, "Print version information")
+	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
+	flag.Parse()
 
-	// Menu
-	switch choice {
-	case "s":
-		fmt.Println("Choose directory to scan:")
-		fmt.Scan(&path)
-		scan(path)
-	case "a":
+	//path := filepath.Clean(flag_path)
+	if version == true {
+		// Display about info
 		about_info()
-	case "q":
-		os.Exit(0)
+	} else if path != "" {
+		path = filepath.Clean(path)
+		scan(path, skip)
 	}
-		
+	
 
+	
 }
 
-func scan(path string) {
+func scan(path string, skip bool) {
 
 	// Do checks on path
 	// Does it end with /
-	slash_check := path[len(path)-1:]
+	//slash_check := path[len(path)-1:]
 	
+
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
 		// Directory exists
@@ -64,11 +64,11 @@ func scan(path string) {
 		log.Fatal("Fatal: directory does not exist")
 	}
 
-	if slash_check != "/" {
+	//if slash_check != "/" {
 		// Add the slash at the end of string
-		slash_check = slash_check + "/"
-		log.Println("info: added trailing slash to path", path + "/")
-	} 
+	//	slash_check = slash_check + "/"
+	//	log.Println("info: added trailing slash to path", path + "/")
+	//} 
 
 	// Count the full path length provided to get to the 
 	// working directory. Later used as shortened path to 
@@ -77,14 +77,24 @@ func scan(path string) {
 	path_count := utf8.RuneCountInString(path)
 
 	// Check if there is a database file
-	if is_file(path + "dfg.db") == 0 {
+	if is_file(filepath.Join(path, db_name)) == 0 {
 		// No database exists so create one
 		// Double check with user just in case they 
 		// gave an incorrect directory to scan
 		// Ask user whether they want to continue
 		var choice string
-		fmt.Println("No datbase file: do you wan to continue (y/n)?")
-		fmt.Scan(&choice)
+		
+		if skip == true {
+			// User specified -s so do not bother them with
+			// questions
+			choice = "y"
+
+		} else {
+			// Confirmation message
+			fmt.Println("No datbase file: do you want to continue (y/n)?")
+			fmt.Scan(&choice)
+		}
+
 
 		switch choice {
 		case "y":
@@ -164,27 +174,25 @@ func backup_db(path string) {
 	dirname, err := os.UserHomeDir()
     if err != nil {
         log.Println(err)
+		os.Exit(1)
     }
 
 	// Check backup dir exists
-
 	backup_dir := dirname + "/.defiantfg/backup"
 
 	err = os.MkdirAll(backup_dir, 0775)
 	if err != nil {
 		log.Println("error: could not create backup directory")
-	} else {
-		log.Println("info: db backup complete")
 	}
 
-	// Copy database file
-	// Compress
 
 }
 
+
 func about_info() {
 
-	// Information about the program
-	fmt.Printf("===\nDEFIANT File Guard (DEFIANT-FG)\nBy Karl Hunter\nhttps://karlhunter.co.uk/defiant/\nfg@karlhunter.co.uk\n===\n")
+	fmt.Println("DEFIANT File Guard (DEFIANT-FG)\nVersion", app_ver ,"\nDate", app_date)
+	fmt.Println("By Karl Hunter\nhttps://karlhunter.co.uk/defiant/\nfg@karlhunter.co.uk")
+	fmt.Println("To scan a directory, add the -d flag followed by directory\ne.g. dfg -d /path/to/dir/")
 
 }

@@ -10,19 +10,22 @@ https://www.karlhunter.co.uk/defiant
 package main
 
 import (
+
     "database/sql"
     "log"
     _ "github.com/mattn/go-sqlite3"
     "time"
     "strings"
-    "os"
+    "path/filepath"
+    
 )
 
 
 
 // If database does not exist create new
 func create_database(path string) int {
-	db, err := sql.Open("sqlite3", path + "dfg.db")
+
+	db, err := sql.Open("sqlite3", filepath.Join(path, db_name))
 
     if err != nil {
         log.Fatal("fatal: could not connect to db", err)
@@ -46,7 +49,7 @@ func create_database(path string) int {
         version	TEXT,
         author TEXT);
         INSERT INTO about("program","website","version","author")
-        VALUES ("DEFIANTFG","http://karlhunter.co.uk/defiant","0.5","Karl Hunter");
+        VALUES ("DEFIANTFG","http://karlhunter.co.uk/defiant","1.0","Karl Hunter");
         `
     _, err = db.Exec(sts)
 
@@ -62,7 +65,7 @@ func create_database(path string) int {
 // and write to the SQLite3 database file
 func write_files_sql(path string, hashmap map[string]string) int {
 
-    db, err := sql.Open("sqlite3", path + "dfg.db")
+    db, err := sql.Open("sqlite3", filepath.Join(path, db_name))
 
     if err != nil {
         log.Fatal("error: Could not open db, msg: ", err)
@@ -71,10 +74,7 @@ func write_files_sql(path string, hashmap map[string]string) int {
 
     defer db.Close()
 
-    // Lock the database
-    db_lock(path, 1)
-
-    // Count the map
+     // Count the map
     new_files_count := len(hashmap)
 
     // Warn user; if more than 10 warn this may take a while
@@ -104,15 +104,9 @@ func write_files_sql(path string, hashmap map[string]string) int {
         _, err = db.Exec(sts)
         if err != nil {
             log.Println("error: cannot insert to data file, msg: ", err, "file:", key)
-                // Unlock the database
-                db_lock(path, 0)
         } 
 
     }
-
-
-    // Unlock the database
-    db_lock(path, 2)
 
     /*if new_files_count > 0 {
         log.Println("info: database writes completed")
@@ -133,14 +127,9 @@ func check_file_sql(short_path string, full_path string, hash string) int {
         return 0
     }
 
-    // Get user input path by removing short_name
-    // from the long path
-    //file_name_count := utf8.RuneCountInString(short_path)
-    //db_path := full_path[:file_name_count]
-   // log.Println(db_path, "<<< path")
 
     // Open database
-    db, err := sql.Open("sqlite3", full_path + "dfg.db")
+    db, err := sql.Open("sqlite3", filepath.Join(full_path, db_name))
 
         if err != nil {
             log.Fatal("fatal: at db open, msg: ", err)
@@ -193,22 +182,18 @@ func missing_files_scan(full_path string) int {
     // If in db but not in directory structure, warn user
 
      // Open database
-     db, err := sql.Open("sqlite3", full_path + "dfg.db")
+     db, err := sql.Open("sqlite3", filepath.Join(full_path, db_name))
 
      if err != nil {
          log.Fatal("fatal: at db open, msg: ", err)
      }
 
     defer db.Close()
-    
-    // Lock the database
-    db_lock(full_path, 1)
-            
+                
     rows, err := db.Query("SELECT path FROM objects WHERE objects.enabled = 1 ORDER BY objects.ID_object DESC;")
 
     if err != nil {
         log.Fatal("fatal: db query error: ", err)
-        db_lock(full_path, 2)
     }
 
     defer rows.Close()
@@ -233,76 +218,9 @@ func missing_files_scan(full_path string) int {
         }
     }
     
-    // Unlock the database
-    db_lock(full_path, 2)
-
     return 0
 
 }
-
-func db_lock(path string, status int) int {
-
-    // In codes
-
-    // 0 means check
-    // 1 means lock
-    // 2 means unlock
-
-    // Return codes
-
-    // 0 means no db file
-    // 1 means there is a db file
-    // 3 error
-
-    write_lock := path + ".dblock"
-
-
-    switch status {
-
-        case 0:
-            // Check if there is a database lock
-            // present to prevent multi access to db
-            if is_file(write_lock) == 1 {
-                // There is a lock present
-                return 1
-            } else if is_file(write_lock) == 0 {
-                // Does not exist
-                return 0
-            } else {
-                // Catch all
-                // Just assume that the lock file present
-                return 1
-
-            }
-
-        case 1:
-
-            // Write lock file
-            err := os.WriteFile(write_lock, []byte("DEFIANT-FG db lock.\nIf DEFIANT-FG is not running you can safely delete"), 0666)
-            if err != nil {
-                log.Println("error: could not create database lock")
-            }
-
-        case 2:
-
-            // Delete the lock file
-            db_file_exist := is_file(write_lock)
-            if db_file_exist == 1{
-
-                err := os.Remove(write_lock)
-                if err != nil {
-                    log.Println("error: could not delete database lock file")
-                }
-    
-
-            }
-
-    }
-
-    return 3
-
-}
-
 
 func clean_string(filename string, do int) string {
 

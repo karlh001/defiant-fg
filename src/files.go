@@ -13,29 +13,31 @@ https://www.karlhunter.co.uk/defiant
 package main
 
 import (
+
 	"os"
 	"errors"
 	"log"
-	"path/filepath"
+    "path/filepath"
+	
 )
 
 
 func iterate(path string, path_count int) int {
 
-	// Inputs
-	// path is full path to file; e.g. /dir/hello-world.txt
+	// Path is full path to file; e.g. /dir/hello-world.txt
 	// short_path is dir after or just file name
 	// e.g. hello-world.txt
 	// Create a map to store data
 	hashmap := map[string]string{}
 	full_path := path
 
+	log.Println("info: scanning files")
+
+
 	// This function will cycle through the directory and print
 	// files and directories.
 	// If there was an error, e.g. permissions, then error message
 	// output to the user
-
-
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 
 
@@ -49,14 +51,13 @@ func iterate(path string, path_count int) int {
 		// This will return the hash value
 		// hash.go
 		file_hash := hash_function(path)
-		
 
 		// Grab the first x characters for path
 		//full_path := path[0:path_count]
 		// To remove the full path use:
 		short_path := path[path_count:]
 
-		if short_path == "" || short_path == "dfg.db" {
+		if short_path == "" || short_path == "/" + db_name {
 			return nil
 		}
 
@@ -79,10 +80,6 @@ func iterate(path string, path_count int) int {
 			// REMOVED DUE TO BUG - UNABLE TO WRITE AND READ
 			// AT THE SAME TIME. HELP NEEDED; PURPOSE TO SPEED
 			// UP DATABASE WRITES
-			// Ask function whether there is a lock file
-			// If there is a lock, returns 1, otherwise 0
-			// means no lock file
-			//db_working := db_lock(full_path, 0)
 
 			// Check size of hashmap
 			// if hash map greater than 9 and there
@@ -105,10 +102,7 @@ func iterate(path string, path_count int) int {
 	// Send map of new files to insert SQL function
 	// Check if any more files to write
 	write_files_sql(full_path, hashmap)
-
-	// Remove db lock
-	db_lock(full_path, 2)
-
+	
 	return 1
 
 }

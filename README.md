@@ -1,7 +1,5 @@
 # DEFIANT-FG
 
-![The Main Menu](img/menu.png)
-
 ## About
 
 DEFIANT-FG (FG) is a light-weight command line utility designed to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional files are added to the database at the next run. 
@@ -20,7 +18,7 @@ FG uses the SHA-256 algorithm to generate hashes. For example the word "DEFIANT-
 
 ## Install and Download
 
-This read me is desgined to be brief to allow you to start enjoying FG as soon as possible. For more detail, please read the [manual](https://karlhunter.co.uk/defiant/man/1). 
+This read me is desgined to be brief to allow you to start enjoying FG as soon as possible. For more detail, please read the [manual](https://karlhunter.co.uk/defiant/). 
 
 ## Download
 
@@ -32,7 +30,11 @@ xyz
 
 On Linux, run the install script as root.
 
-	sudo sh INSTALL.sh
+	sudo sh INSTALL_LINUX.sh
+
+On ARM processors, such as Raspberry Pi
+	
+	sudo sh INSTALL_ARM.sh
 
 This script will copy necessary files so allow you to run in the command line:
 
@@ -54,11 +56,13 @@ Run to test:
 
 Run the command-line too: 
 
-	fg --dir /path/dir/  
+	dfg -d /path/dir/  
 
-You choose a directory to scan. Let's say it's your pictures folder on an external hard drive located /mnt/hdd/Pictures/ 
+Let's say you have a pictures folder on an external hard drive located /mnt/hdd/Pictures/. To scan this directory use:
 
-If you have scanned this directory before, there will be a database file with the hashes. If not present, FG will check for a backup. If not found, a blank database will be created. 
+	dfg -d /mnt/hdd/Pictures/
+
+If you have scanned this directory before, there will be a database file with the file hashes stored within. If not present, FG will ask you to confirm; type `y` to confirm.
 
 FG will look through the directory structure at every file. If the file is known to FG, the previous hash will be checked against the current hash - if it changes you will be notified to restore from backup. If the file is not known, a new hash will be generated and stored into the database. 
 
@@ -66,12 +70,12 @@ Finally, the database file is used to check for missing files
 
 ## Database File 
 
-This file is portable and should move with the directory, such as back up to remote storage or migration to new hard drive. It contains the path to file, hash of file, and basic meta data.  
+This file is portable and should move with the directory, such as back up to remote storage or migration to new hard drive. It contains the path to file, hash of file, and basic meta data. Database file is named `dfg.db`
 
 ## Manual
 
-For more detail, read the manual [here](https://karlhunter.co.uk/defiant/man/).
+For more detail, read the manual [here](https://karlhunter.co.uk/defiant/).
 
 ## Help
 
-If you would like to contribute, please commit changes and I will be happy for the help. Please visit decision for more details and direction of the project. 
+If you would like to contribute, please commit changes and I will be happy for the help.
