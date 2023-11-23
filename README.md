@@ -22,7 +22,7 @@ This read me is desgined to be brief to allow you to start enjoying FG as soon a
 
 ## Download
 
-xyz
+[Click here](https://github.com/karlh001/defiant-fg/releases) for releases.
 
 ## Install
 
@@ -40,17 +40,6 @@ This script will copy necessary files so allow you to run in the command line:
 
 	dfg
 
-### Windows
-
-Download and extract latest version. 
-
-Copy to /???
-
-Open PowerShell or CMD
-
-Run to test:
-
-	dfg
 
 ## Usage 
 

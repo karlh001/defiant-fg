@@ -25,8 +25,8 @@ echo "Copying new data"
 
 sudo mkdir /usr/lib/defiantfg
 sudo cp -r * /usr/lib/defiantfg/
-sudo chmod +x /usr/lib/defiantfg/bin/linux_x86_64/dfg.bin
-sudo cp /usr/lib/defiantfg/bin/linux_x86_64/dfg.bin /usr/bin/dfg
+sudo chmod +x /usr/lib/defiantfg/bin/linux_amd64/dfg.bin
+sudo cp /usr/lib/defiantfg/bin/linux_amd64/dfg.bin /usr/bin/dfg
 
 
 # Finished
