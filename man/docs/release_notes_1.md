@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 1.0.1
+
+2023-11-24
+
+* Minor typos fixes
+* README typos fixed
+* Fixed email address in about on application
+* Built using earliest support Ubuntu LTS for compatibility 
+
 ## Version 1.0
 
 2023-11-23

@@ -2,10 +2,12 @@
 
 I build the most recent long-term support of Ubuntu so ensure later operating system compatibility. 
 
+Build on Ubuntu Server Ubuntu 20.04.6 LTS
+
 Tested on: 
 
-* Linux Mint
-* Ubuntu LTS
+* Linux Mint 21.2
+* Ubuntu LTS 20.04.6
 
 # Build
 

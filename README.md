@@ -43,7 +43,7 @@ This script will copy necessary files so allow you to run in the command line:
 
 ## Usage 
 
-Run the command-line too: 
+Run the command-line tool: 
 
 	dfg -d /path/dir/  
 

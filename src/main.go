@@ -17,8 +17,8 @@ import (
 
 )
 
-const app_ver string = "1.0"
-const app_date string = "2023-11-22"
+const app_ver string = "1.0.1"
+const app_date string = "2023-11-24"
 const db_name string = "dfg.db"
 
 func main() {
@@ -192,7 +192,7 @@ func backup_db(path string) {
 func about_info() {
 
 	fmt.Println("DEFIANT File Guard (DEFIANT-FG)\nVersion", app_ver ,"\nDate", app_date)
-	fmt.Println("By Karl Hunter\nhttps://karlhunter.co.uk/defiant/\nfg@karlhunter.co.uk")
+	fmt.Println("By Karl Hunter\nhttps://karlhunter.co.uk/defiant/\ndfg@karlhunter.co.uk")
 	fmt.Println("To scan a directory, add the -d flag followed by directory\ne.g. dfg -d /path/to/dir/")
 
 }
