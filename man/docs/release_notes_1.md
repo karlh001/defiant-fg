@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 1.1
+
+{date}
+
+* Added log [file](log.md) flag
+
 ## Version 1.0.1
 
 2023-11-24

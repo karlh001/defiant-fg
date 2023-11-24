@@ -57,6 +57,13 @@ FG will look through the directory structure at every file. If the file is known
 
 Finally, the database file is used to check for missing files 
 
+### Scripting
+
+To run the application to on a schedule or through a script, add the `-l` and `-s` flags to skip user inputs on the terminal. Read about flags [here](flags.md).
+
+	dfg -l -s -d /path/to/files/
+
+
 ## Database File 
 
 This file is portable and should move with the directory, such as back up to remote storage or migration to new hard drive. It contains the path to file, hash of file, and basic meta data. Database file is named `dfg.db`
