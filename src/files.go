@@ -57,7 +57,8 @@ func iterate(path string, path_count int) int {
 		// To remove the full path use:
 		short_path := path[path_count:]
 
-		if short_path == "" || short_path == "/" + db_name {
+		// Skip DFG files
+		if short_path == "" || short_path == "/" + db_name || short_path == "/" + log_name {
 			return nil
 		}
 

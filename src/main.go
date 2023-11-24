@@ -17,22 +17,30 @@ import (
 
 )
 
-const app_ver string = "1.0.1"
+const app_ver string = "1.0.2"
 const app_date string = "2023-11-24"
 const db_name string = "dfg.db"
+const log_name string = "dfg.log"
 
 func main() {
 
-	// variables declaration  
+	// variables declaration 
 	var path string
 	version := false
 	skip := false
+	log := false
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
+	flag.BoolVar(&log, "l", false, "Output log file to directory")
 	flag.Parse()
+
+	// Enable writing log to file
+	if log == true {
+		logging(path)
+	}
 
 	//path := filepath.Clean(flag_path)
 	if version == true {
@@ -45,6 +53,20 @@ func main() {
 	
 
 	
+}
+
+func logging(path string){
+	// Save log into file
+	path = filepath.Clean(path)
+	path = filepath.Join(path, log_name)
+
+    file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    if err != nil {
+        log.Println("error: Could not create log file")
+    }
+
+	log.SetOutput(file)
+
 }
 
 func scan(path string, skip bool) {
