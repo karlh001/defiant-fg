@@ -13,11 +13,11 @@ import (
 	"log"
 	"unicode/utf8"
 	"flag"
-    "path/filepath"
+	"path/filepath"
 
 )
 
-const app_ver string = "1.0.2"
+const app_ver string = "1.1"
 const app_date string = "2023-11-24"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
