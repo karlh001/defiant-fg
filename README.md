@@ -27,8 +27,10 @@ This read me is desgined to be brief to allow you to start enjoying FG as soon a
 ## Install
 
 ### Linux
+ 
+On a Debian-based operating system, such as Ubuntu or Linux Mint, download the deb installer located in the deb directory.
 
-On Linux, run the install script as root.
+On other Linux, run the install script as root.
 
 	sudo sh INSTALL_LINUX.sh
 
