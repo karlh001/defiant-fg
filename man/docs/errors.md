@@ -31,3 +31,9 @@ You provided a location that is not a directory. Check your input.
 	missing: /path/to/file.PNG
 
 The file is no longer present. It may have been deleted, moved or renamed. If you moved or renamed, the old file meta data will persist in the database. 
+
+## Logging
+
+	error: Could not create log file
+
+FG was not able to write to the directory. `/path/to/files/dfg.log`

@@ -57,9 +57,13 @@ FG will look through the directory structure at every file. If the file is known
 
 Finally, the database file is used to check for missing files 
 
+### Logging
+
+To save a log file within the scanned directory, add the `-l` [flag](https://karlhunter.co.uk/defiant/flags/). The log file will be named `dfg.log`.
+
 ### Scripting
 
-To run the application to on a schedule or through a script, add the `-l` and `-s` flags to skip user inputs on the terminal. Read about flags [here](flags.md).
+To run the application to on a schedule or through a script, add the `-l` and `-s` flags to skip user inputs on the terminal. Read about flags [here](https://karlhunter.co.uk/defiant/flags/).
 
 	dfg -l -s -d /path/to/files/
 
