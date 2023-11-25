@@ -27,6 +27,7 @@ sudo mkdir /usr/lib/defiantfg
 sudo cp -r * /usr/lib/defiantfg/
 sudo chmod +x /usr/lib/defiantfg/bin/linux_amd64/dfg.bin
 sudo cp /usr/lib/defiantfg/bin/linux_amd64/dfg.bin /usr/bin/dfg
+sudo cp /usr/lib/defiantfg/man/dfg.1 /usr/share/man/man1/
 
 
 # Finished
