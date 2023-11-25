@@ -1,36 +1,20 @@
 # Installation
+
 ## On Linux 
 
- 
+On Debian based operating systems (such as Ubuntu, Linux Mint) download and install the deb package. On desktop versions, open package and click `install package`. 
 
-For automatic installation on Linux, extract the archive (dfg_linux_stable.tar) and run install.sh as root. 
+For automatic installation on Linux, download the source code from the releases section, extract the tar and run: 
 
- 
+	sh INSTALL_LINUX.sh
 
-Alternatively, install manually: 
 
- 
-
-	cd ~/Downloads 
-
-	wget http://karlhunter.co.uk/defiant/downloads/	dfg_linux_stable.tar 
-
-	tar -XYZ dfg_linux.tar 
-
-	cp  
-
- 
-
-As standalone executable, extract the contents and copy dfg.bin anywhere you desire. Make executable with command: 
-
- 
+As stand-alone executable, extract the contents and copy dfg.bin anywhere you desire. Make executable with command:  
 
 	chmod +x dfg.bin 
 
- 
 
 And run: 
-
  
 
 	./dfg.bin 
