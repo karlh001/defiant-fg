@@ -2,9 +2,10 @@
 
 ## Version 1.1
 
-{date}
+2023-11-25
 
 * Added log [file](log.md) flag
+* Deb packager installer
 
 ## Version 1.0.1
 
