@@ -1,5 +1,5 @@
 site_name: DEFIANT-FG
-site_url: https://karlhunter.co.uk/defiant/man
+site_url: https://karlhunter.co.uk/defiant/
 nav:
   - Home: index.md
   - About: about.md
