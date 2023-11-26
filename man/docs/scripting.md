@@ -17,6 +17,13 @@ How it looks together:
 	dfg -s -e -l -d /path/to/files/
 
 
+If you supply both the `-l` and `-e` flags together this will result in the following being written to the log file (need to know time scan started or finished). If there are any errors these will display between the start and end sections of the log.
+
+	2023/11/26 13:35:59 info: Scan started
+	2023/11/26 13:35:59 info: finished
+
+If you want to check if script was successful look for a `0` return:
+
 Any errors will return `1`, and success will return `0`.
 
 
