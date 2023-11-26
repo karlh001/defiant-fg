@@ -11,7 +11,7 @@
 .Nm dfg
 .Sh SYNOPSIS             \" Section Header - required - don't modify
 .Nm
-.Op Fl l | -s | -d /path/to/dir             \" [-abcd]
+.Op Fl l | -s | -e | -d /path/to/dir             \" [-abcd]
 .Op Fl version         \" [-a path]
 .Sh DESCRIPTION          \" Section Header - required - don't modify
 .Nm
@@ -24,6 +24,8 @@ A list of flags and their descriptions:
 Print program version number
 .It Fl s
 Skip user inputs, use for scripting
+.It Fl e
+Does not display info messages; only shows errors
 .It Fl l
 Create log output file, located root dir named dfg.log
 .It Fl d
