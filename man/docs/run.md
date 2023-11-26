@@ -38,3 +38,7 @@ After this process has finished, FG will then cycle through the database to chec
 The scan will complete. 
 
 If this is the first time you are running a scan, and have thousands of files, it may take a few hours to write to the database. Further scans on the same directory will work much faster. 
+
+## Scripting
+
+For more information about using `dfg` as part of a script, read [this section](scripting.md).
