@@ -27,19 +27,19 @@ func main() {
 	noinfo := false
 	version := false
 	skip := false
-	log := false
+	logfile := false
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
-	flag.BoolVar(&log, "l", false, "Output log file to directory")
+	flag.BoolVar(&logfile, "l", false, "Output log file to directory")
 	flag.BoolVar(&noinfo, "e", false, "Skips info logs only shows errors")
 	flag.Parse()
 
 	// Enable writing log to file
-	if log == true {
-		logging(path)
+	if logfile == true {
+		logging(path, noinfo, logfile)
 	}
 
 	//path := filepath.Clean(flag_path)
@@ -48,12 +48,12 @@ func main() {
 		about_info()
 	} else if path != "" {
 		path = filepath.Clean(path)
-		scan(path, skip, noinfo)
+		scan(path, skip, noinfo, logfile)
 	}
 
 }
 
-func logging(path string) {
+func logging(path string, noinfo bool, logfile bool) {
 	// Save log into file
 	path = filepath.Clean(path)
 	path = filepath.Join(path, log_name)
@@ -65,9 +65,14 @@ func logging(path string) {
 
 	log.SetOutput(file)
 
+	// Log start of scan for log
+	if noinfo == true && logfile == true {
+		log.Println("info: Scan started")
+	}
+
 }
 
-func scan(path string, skip bool, noinfo bool) {
+func scan(path string, skip bool, noinfo bool, logfile bool) {
 
 	// Do checks on path
 	// Does it end with /
@@ -135,7 +140,7 @@ func scan(path string, skip bool, noinfo bool) {
 			}
 
 			// 0 means skip the missing file scan
-			start_scan(path, path_count, 0, noinfo)
+			start_scan(path, path_count, 0, noinfo, logfile)
 
 		case "n":
 			os.Exit(1)
@@ -151,13 +156,13 @@ func scan(path string, skip bool, noinfo bool) {
 		// function and tell not to do the missing file scan
 		// 1 sent through function to say do not run missing files
 
-		start_scan(path, path_count, 1, noinfo)
+		start_scan(path, path_count, 1, noinfo, logfile)
 
 	}
 
 }
 
-func start_scan(path string, path_count int, look_missing int, noinfo bool) {
+func start_scan(path string, path_count int, look_missing int, noinfo bool, logfile bool) {
 
 	// Db file is new, so no point looking for
 	// missing files as this is first run on directory
@@ -181,6 +186,8 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool) {
 	//backup_db(path)
 
 	if noinfo == false {
+		log.Println("info: finished")
+	} else if noinfo == true && logfile == true {
 		log.Println("info: finished")
 	}
 
