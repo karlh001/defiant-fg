@@ -1,0 +1,33 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 20231125               \" DATE
+.Dt DFG 1      \" Program name and manual section number
+.Os Linux
+.Sh NAME                 \" Section Header - required - don't modify
+.Nm DEFIANT-FG
+.Nm dfg
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl l | -s | -e | -d /path/to/dir             \" [-abcd]
+.Op Fl version         \" [-a path]
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is a powerful, light-weight, open source, command line tool to monitor for corruption, changes or missing files in a directory structure written in Go.
+.Pp                      \" Inserts a space
+.Bl -tag -width -indent  \" Begins a tagged list
+A list of flags and their descriptions:
+.Bl -tag -width -indent  \" Differs from above in tag removed
+.It Fl version
+Print program version number
+.It Fl s
+Skip user inputs, use for scripting
+.It Fl e
+Does not display info messages; only shows errors
+.It Fl l
+Create log output file, located root dir named dfg.log
+.It Fl d
+Specify directory to scan
+.El                      \" Ends the list

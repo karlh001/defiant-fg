@@ -6,11 +6,6 @@ echo "Installation started"
 
 echo "Checking for older installs"
 
-if [ -e /usr/lib/defiantfg ]
-then
-	echo "Found and deleted"
-	sudo rm -r /usr/lib/defiantfg
-fi
 
 if [ -e /usr/bin/dfg ]
 then
@@ -23,12 +18,9 @@ fi
 
 echo "Copying new data"
 
-sudo mkdir /usr/lib/defiantfg
-sudo cp -r ../* /usr/lib/defiantfg/
-sudo chmod +x /usr/lib/defiantfg/bin/linux_amd64/dfg.bin
-sudo cp /usr/lib/defiantfg/bin/linux_amd64/dfg.bin /usr/bin/dfg
-sudo cp /usr/lib/defiantfg/man/dfg.1 /usr/share/man/man1/
-
+sudo cp ../bin/linux_amd64/dfg.bin /usr/bin/dfg
+sudo cp ../docs/dfg.1 /usr/share/man/man1/
+sudo chmod +x /usr/bin/dfg
 
 # Finished
 
