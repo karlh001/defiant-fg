@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 1.2
+
+2023-11-XX
+
+* Show only errors with `-e` flag
+* In log more with `-e` still shows start / finish time
+
 ## Version 1.1
 
 2023-11-25

@@ -18,8 +18,8 @@ fi
 
 echo "Copying new data"
 
-sudo cp ../bin/linux_amd64/dfg.bin /usr/bin/dfg
-sudo cp ../docs/dfg.1 /usr/share/man/man1/
+sudo cp bin/linux_amd64/dfg.bin /usr/bin/dfg
+sudo cp docs/dfg.1 /usr/share/man/man1/
 sudo chmod +x /usr/bin/dfg
 
 # Finished

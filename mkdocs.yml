@@ -4,7 +4,6 @@ nav:
   - Home: index.md
   - About: about.md
   - Requirements: requirements.md
-  - Download: download.md
   - Installation: installation.md
   - Run: run.md
   - Flags: flags.md

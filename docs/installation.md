@@ -2,11 +2,17 @@
 
 ## On Linux 
 
-On Debian based operating systems (such as Ubuntu, Linux Mint) download and install the deb package. On desktop versions, open package and click `install package`. 
+On Debian based operating systems (such as Ubuntu, Linux Mint), download the deb package. On desktop versions, open package and click `install package`. 
 
-For automatic installation on Linux, download the source code from the releases section, extract the tar and change directory to the build directory, then run:
+Done.
 
-	sh INSTALL_LINUX.sh
+However, if you are running another Linux operating system or prefer not use use deb packages follow this instructions:
+
+For manual installation on Linux, download the source code from the releases section, extract the tar and change directory to the build directory (e.g. `cd ~/Downloads/defiant-fg-main/`, then run:
+
+	sh build/INSTALL_LINUX.sh
+
+_Do not execute script from within build folder or it will fail_
 
 Test install. Run:
 

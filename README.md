@@ -32,11 +32,11 @@ On a Debian-based operating system, such as Ubuntu or Linux Mint, download the d
 
 On other Linux, run the install script as root.
 
-	sudo sh INSTALL_LINUX.sh
+	sudo sh build/INSTALL_LINUX.sh
 
 On ARM processors, such as Raspberry Pi
 	
-	sudo sh INSTALL_ARM.sh
+	sudo sh build/INSTALL_ARM.sh
 
 This script will copy necessary files so allow you to run in the command line:
 

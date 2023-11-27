@@ -13,12 +13,12 @@ Helps detect bitrot and early signs of media failure.
 
 For releases visit [this page](https://github.com/karlh001/defiant-fg/releases).
 
-* [Deb installer](https://github.com/karlh001/defiant-fg/tree/main/deb) (Debian, Linux Mint, Ubuntu) for Arm or AMD64.
+* [Deb installer](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/) (Debian, Linux Mint, Ubuntu) for Arm or AMD64.
 
 Available builds
 
-- Linux 64 bit
-- Arm 64 bit
+- [Linux 64 bit](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/amd64/dfg_amd64.deb)
+- [Arm 64 bit](https://github.com/karlh001/defiant-fg/tree/main/binbin/deb_pkgs/amd64/)
 
 For installation instructions [click here](installation.md).
 
