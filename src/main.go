@@ -16,7 +16,7 @@ import (
 )
 
 const app_ver string = "1.2"
-const app_date string = "2023-11-24"
+const app_date string = "2023-11-28"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -33,8 +33,8 @@ func main() {
 	flag.StringVar(&path, "d", " ", "Specify directory")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
-	flag.BoolVar(&logfile, "l", false, "Output log file to directory")
-	flag.BoolVar(&noinfo, "e", false, "Skips info logs only shows errors")
+	flag.BoolVar(&logfile, "l", false, "Output log file to the scanned directory")
+	flag.BoolVar(&noinfo, "e", false, "Skips info log entries, only shows errors")
 	flag.Parse()
 
 	// Enable writing log to file
