@@ -17,8 +17,8 @@ For releases visit [this page](https://github.com/karlh001/defiant-fg/releases).
 
 Available builds
 
-- [Linux 64 bit](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/amd64/dfg_amd64.deb)
-- [Arm 64 bit](https://github.com/karlh001/defiant-fg/tree/main/binbin/deb_pkgs/amd64/)
+- [Linux 64 bit](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/dfg_amd64.deb)
+- [Arm 64 bit](https://github.com/karlh001/defiant-fg/tree/main/binbin/deb_pkgs/dfg_arm64.deb)
 
 For installation instructions [click here](installation.md).
 
