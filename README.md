@@ -78,6 +78,11 @@ This file is portable and should move with the directory, such as back up to rem
 
 For more detail, read the manual [here](https://karlhunter.co.uk/defiant/).
 
-## Help
+Help within the application:
+
+	dfg -help
+
+
+## Contribution
 
 If you would like to contribute, please commit changes and I will be happy for the help.
