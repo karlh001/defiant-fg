@@ -9,7 +9,7 @@ Choose directory to scan. For example:
 
 Note: the -d should be the last argument. Use other flags before this. 
 
-### Skip
+### Skip confirmation questions
 `-s`
 
 Skip any messages after executing application. Useful for scripting. Will skip confirmation message to create new database file
@@ -34,5 +34,10 @@ Add the l flag to output to a log file. Your terminal will no longer show verbos
 
 Outputs version of the application
 
+### Help
+
+`-help`
+
+Outputs basic help within the application
 
 
