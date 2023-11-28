@@ -1,5 +1,12 @@
 # Release Notes
 
+## Version 1.2.1
+
+2023-11-28
+
+* Rebuild binary to work with older Linux
+
+
 ## Version 1.2
 
 2023-11-28
