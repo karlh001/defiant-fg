@@ -2,9 +2,9 @@
 
 ## About
 
-DEFIANT-FG (FG) is a light-weight command line utility designed to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional files are added to the database at the next run. 
+DEFIANT-FG (FG) is a light-weight command line utility designed to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional objects are added to the database at the next run. 
 
-Run periodically to check the integrity of your static archive or backup. New and unknown files are added to the database at next run, so you can easily grow the directory. FG will, however, log failed hashes (such as bit rot or corrupted files) and missing files.  
+Run periodically to check the integrity of your static archive or backup. New and unknown objects are added to the database at next run, so you can easily grow the directory. FG will, however, log failed hashes (such as bit rot or corrupted objects) and missing objects.  
  
 ## How it works 
 
@@ -12,7 +12,7 @@ Each object is checked against a known hash. If the object has not been seen by 
 
 ## What's a hash 
 
-The object (such as picture file, video file, document) is put through a mathematical formula to return a unique code for each object. It's unlikely two different objects will contain the same code. This is why it's a great method to check objects have not been changed. For example, if bit rot occurs, a single bit may change from a 1 to a 0 or vice versa which may not make much difference to a text file, but completely change a picture or damage a video.  
+The object (such as picture, video or document) is put through a mathematical formula to return a unique code for each object. It's unlikely two different objects will contain the same code. This is why it's a great method to check objects have not been changed. For example, if bit rot occurs, a single bit may change from a 1 to a 0 or vice versa which may not make much difference to a text file, but completely change a picture or damage a video.  
 
 FG uses the SHA-256 algorithm to generate hashes. For example the word "DEFIANT-FG" run through SHA-256 will become: 2948a9654f6276d7de69e60c9304ece662f9ba17c667e6dfcd4dacf38661192b. If I change the last character from "G" to "g" and run again, the hash will completely change: 121089879462d657a7938d8e44b909d6cabfde31f525a13c04be0a534ee61f5e 
 
