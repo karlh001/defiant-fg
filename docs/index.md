@@ -1,5 +1,7 @@
 # Welcome to the home of DEFIANT-FG
 
+![DFG Logo](dfg_logo.png)
+
 ## About
 
 DEFIANT-FG is a powerful, light-weight, open source, command line tool to monitor for corruption, changes or missing files in a directory structure.

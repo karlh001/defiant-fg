@@ -1,5 +1,7 @@
 # DEFIANT-FG
 
+![DFG Logo](docs/dfg_logo.png)
+
 ## About
 
 DEFIANT-FG (FG) is a light-weight command line utility designed to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional objects are added to the database at the next run. 
