@@ -15,8 +15,8 @@ import (
 	"unicode/utf8"
 )
 
-const app_ver string = "1.2.1"
-const app_date string = "2023-11-28"
+const app_ver string = "1.2.2"
+const app_date string = "2023-12-02"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -28,6 +28,7 @@ func main() {
 	version := false
 	skip := false
 	logfile := false
+	flag_help := false
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
@@ -35,6 +36,7 @@ func main() {
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
 	flag.BoolVar(&logfile, "l", false, "Output log file to the scanned directory")
 	flag.BoolVar(&noinfo, "e", false, "Skips info log entries, only shows errors")
+	flag.BoolVar(&flag_help, "help", false, "Program help info")
 	flag.Parse()
 
 	// Enable writing log to file
@@ -46,6 +48,8 @@ func main() {
 	if version == true {
 		// Display about info
 		about_info()
+	} else if flag_help {
+		display_help()
 	} else if path != "" {
 		path = filepath.Clean(path)
 		scan(path, skip, noinfo, logfile)
