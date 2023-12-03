@@ -22,3 +22,6 @@ You are encouraged to keep a back-up of the database file. As long as you restor
 		* ts (time stamp) [column] (YYYYMMDDHHMMSS)
 		* enabled [column] default 1
 
+## File Name Limitations
+
+The database will not accept an apostrophes or `<!` in the filename; if present in a file name, these will be replaced with a tag before storing in the database. The apostrophe will become `xAPOSx` and the less than bracket `<!` will become `xBRACKx`.
