@@ -6,11 +6,16 @@ DEFIANT-FG stores your file hashes into a database (db) file named `dfg.db`. It'
 
 ## Location
 
-The db file is stored in the root of the given directory; for example, if you run on `/mnt/usb/Pictures` the db file will be located `/mnt/usb/Pictures/dfg.db`. Any sub folders will be included in the hash database.
+By default, db file is stored in the root of the given directory; for example, if you run on `/mnt/usb/Pictures` the db file will be located `/mnt/usb/Pictures/dfg.db`. Any sub folders will be included in the hash database.
+
+You can specify your own db location with name of the database file. To do this, use the `-db` flag, example:
+
+	dfg -db /path/to/db.sql -d /path/to/files/
+
 
 ## Portability
 
-You are encouraged to keep a back-up of the database file. As long as you restore to the root of the original directory it will work, even though the full path changes. For example, you can move the Pictures to: `/mnt/usb2/Pictures`; in fact, the picture folder name can be changed too.
+You are encouraged to keep a back-up of the database file. As long as you restore to the root of the original directory (or specify the exact location) it will work, even though the full path changes. For example, you can move the Pictures to: `/mnt/usb2/Pictures`; in fact, the picture directory name can be changed too.
 
 ## Structure
 

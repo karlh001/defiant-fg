@@ -38,6 +38,18 @@ Example:
 
 	dfg -l -log /var/log/pictures.log -d /mnt/usb/pictures/
 
+### Database file location
+
+`-db`
+
+You can specify your own db location with name of the database file. To do this, use the `-db` flag, example:
+
+	dfg -db /path/to/db.sql -d /path/to/files/
+
+Ensure you specify the database name, not just the directory path.
+
+More on [database](db.md).
+
 ### Version
 
 `-version`
