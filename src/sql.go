@@ -60,9 +60,9 @@ func create_database(path string) int {
 
 // This function will take the map (array of all the filenames and hashes)
 // and write to the SQLite3 database file
-func write_files_sql(path string, hashmap map[string]string, noinfo bool) int {
+func write_files_sql(path string, hashmap map[string]string, noinfo bool, dbfile string) int {
 
-	db, err := sql.Open("sqlite3", filepath.Join(path, db_name))
+	db, err := sql.Open("sqlite3", filepath.Join(dbfile))
 
 	if err != nil {
 		log.Fatal("error: Could not open db, msg: ", err)
@@ -116,7 +116,7 @@ func write_files_sql(path string, hashmap map[string]string, noinfo bool) int {
 // Function to check if the file exists in the database
 // This function is called from the iterate function found in
 // the files.go package
-func check_file_sql(short_path string, full_path string, hash string) int {
+func check_file_sql(short_path string, full_path string, hash string, dbfile string) int {
 
 	// Check if first record, the given diectory
 	if short_path == "" {
@@ -124,7 +124,7 @@ func check_file_sql(short_path string, full_path string, hash string) int {
 	}
 
 	// Open database
-	db, err := sql.Open("sqlite3", filepath.Join(full_path, db_name))
+	db, err := sql.Open("sqlite3", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: at db open, msg: ", err)
@@ -167,14 +167,14 @@ func check_file_sql(short_path string, full_path string, hash string) int {
 }
 
 // Query database and check files are still present
-func missing_files_scan(full_path string) int {
+func missing_files_scan(full_path string, dbfile string) int {
 
 	// Iterate through directory using db records
 	// if exists, skip. If record in db but not file
 	// If in db but not in directory structure, warn user
 
 	// Open database
-	db, err := sql.Open("sqlite3", filepath.Join(full_path, db_name))
+	db, err := sql.Open("sqlite3", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: at db open, msg: ", err)

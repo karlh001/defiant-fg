@@ -25,6 +25,7 @@ func main() {
 	// variables declaration
 	var path string
 	var logfile string
+	var dbfile string
 	noinfo := false
 	version := false
 	skip := false
@@ -37,6 +38,7 @@ func main() {
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
 	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
 	flag.StringVar(&logfile, "log", " ", "User defined log file")
+	flag.StringVar(&dbfile, "db", " ", "User defined log file")
 	flag.BoolVar(&noinfo, "e", false, "Skips info log entries, only shows errors")
 	flag.BoolVar(&flag_help, "help", false, "Program help info")
 	flag.Parse()
@@ -54,7 +56,7 @@ func main() {
 		display_help()
 	} else if path != "" {
 		path = filepath.Clean(path)
-		scan(path, skip, noinfo, logon)
+		scan(path, skip, noinfo, logon, dbfile)
 	}
 
 }
@@ -81,11 +83,7 @@ func logging(path string, noinfo bool, logon bool, logfile string) {
 
 }
 
-func scan(path string, skip bool, noinfo bool, logon bool) {
-
-	// Do checks on path
-	// Does it end with /
-	//slash_check := path[len(path)-1:]
+func scan(path string, skip bool, noinfo bool, logon bool, dbfile string) {
 
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
@@ -105,12 +103,19 @@ func scan(path string, skip bool, noinfo bool, logon bool) {
 	// round and be easily worked with
 	path_count := utf8.RuneCountInString(path)
 
-	// Check if there is a database file
-	if is_file(filepath.Join(path, db_name)) == 0 {
+	// Did user choose own path?
+	if dbfile != " " {
+		dbfile = filepath.Clean(dbfile)
+		if noinfo == false {
+			log.Print("info: db location specified ", dbfile)
+		}
+	} else {
+		dbfile = filepath.Join(path, db_name)
+	}
+
+	if is_file(dbfile) == 0 {
 		// No database exists so create one
 		// Double check with user just in case they
-		// gave an incorrect directory to scan
-		// Ask user whether they want to continue
 		var choice string
 
 		if skip == true {
@@ -143,7 +148,7 @@ func scan(path string, skip bool, noinfo bool, logon bool) {
 			}
 
 			// 0 means skip the missing file scan
-			start_scan(path, path_count, 0, noinfo, logon)
+			start_scan(path, path_count, 0, noinfo, logon, dbfile)
 
 		case "n":
 			os.Exit(1)
@@ -159,19 +164,19 @@ func scan(path string, skip bool, noinfo bool, logon bool) {
 		// function and tell not to do the missing file scan
 		// 1 sent through function to say do not run missing files
 
-		start_scan(path, path_count, 1, noinfo, logon)
+		start_scan(path, path_count, 1, noinfo, logon, dbfile)
 
 	}
 
 }
 
-func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool) {
+func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool, dbfile string) {
 
 	// Db file is new, so no point looking for
 	// missing files as this is first run on directory
 	// Send path to function and cycle through all files
 	// and directories to generate hashes
-	iterate(path, path_count, noinfo)
+	iterate(path, path_count, noinfo, dbfile)
 
 	// Run a scan to check for missing files
 	// Only run is db was existing
@@ -181,7 +186,7 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 			log.Println("info: checking for missing files")
 		}
 
-		missing_files_scan(path)
+		missing_files_scan(path, dbfile)
 
 	}
 

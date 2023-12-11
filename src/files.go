@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 )
 
-func iterate(path string, path_count int, noinfo bool) int {
+func iterate(path string, path_count int, noinfo bool, dbfile string) int {
 
 	// Path is full path to file; e.g. /dir/hello-world.txt
 	// short_path is dir after or just file name
@@ -59,7 +59,7 @@ func iterate(path string, path_count int, noinfo bool) int {
 		// Check database to see if we have seen this
 		// file before; need to use the short path
 		// because it's the short path stored in sql
-		file_check_result := check_file_sql(short_path, full_path, file_hash)
+		file_check_result := check_file_sql(short_path, full_path, file_hash, dbfile)
 
 		// Runs this if statement if
 		// is a file, not directory AND
@@ -79,7 +79,7 @@ func iterate(path string, path_count int, noinfo bool) int {
 
 	// Send map of new files to insert SQL function
 	// Check if any more files to write
-	write_files_sql(full_path, hashmap, noinfo)
+	write_files_sql(full_path, hashmap, noinfo, dbfile)
 
 	return 1
 
