@@ -1,4 +1,4 @@
-# Welcome to the home of DEFIANT-FG
+# Welcome
 
 ![DFG Logo](dfg_logo.png)
 
@@ -19,10 +19,10 @@ For releases visit [this page](https://github.com/karlh001/defiant-fg/releases).
 
 Available builds
 
-- [Linux 64 bit](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/dfg_amd64.deb)
-- [Arm 64 bit](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/dfg_arm64.deb)
+- Linux 64 bit
+- Arm 64 bit
 
-For installation instructions [click here](installation.md).
+[Click here](https://github.com/karlh001/defiant-fg/archive/refs/heads/main.zip) to download then follow the [installation instructions](installation.md) to either build self or install non-DEB package.
 
 ## Open Source
 

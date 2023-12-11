@@ -71,27 +71,10 @@ func iterate(path string, path_count int, noinfo bool) int {
 		if is_file(path) == 1 && file_check_result == 1 {
 
 			// Add file with hash to the map
-			// This will be sent later to insert
-			// into the database later
 			hashmap[short_path] = file_hash
-
-			// REMOVED DUE TO BUG - UNABLE TO WRITE AND READ
-			// AT THE SAME TIME. HELP NEEDED; PURPOSE TO SPEED
-			// UP DATABASE WRITES
-
-			// Check size of hashmap
-			// if hash map greater than 9 and there
-			// is no database lock continue
-			// Or skip until the next cycle
-			/*if len(hashmap) > 999999 && db_working == 0 {
-
-				// Send hash map to SQL writer
-				go write_files_sql(full_path, hashmap)
-
-				// Clear hash map for further files
-				hashmap = make(map[string]string)
-
-			}*/
+			if noinfo == false {
+				log.Println("new:", path)
+			}
 		}
 
 		return nil

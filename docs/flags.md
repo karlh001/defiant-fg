@@ -22,9 +22,11 @@ Skip any messages after executing application. Useful for scripting. Will skip c
 
 Only shows errors such as failed hashes and missing files. Does not show any info prompts during the scan.
 
+Note: will also not show a line for new files.
+
 ### Logging
 
-	-l
+`-l`
 
 Add the l flag to output to a log file. Your terminal will no longer show verbose. More on the [log file](log.md).
 
