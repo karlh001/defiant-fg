@@ -1,8 +1,5 @@
 /*
-This mod checks whether a given string is a
-directory.
-
-Returns 1 for directory, 0 for not (likely file)
+This mod relates to all file system functions
 
 Karl Hunter 2023
 2023-11-19

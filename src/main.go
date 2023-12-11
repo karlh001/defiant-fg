@@ -24,24 +24,26 @@ func main() {
 
 	// variables declaration
 	var path string
+	var logfile string
 	noinfo := false
 	version := false
 	skip := false
-	logfile := false
+	logon := false
 	flag_help := false
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
-	flag.BoolVar(&logfile, "l", false, "Output log file to the scanned directory")
+	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
+	flag.StringVar(&logfile, "log", " ", "User defined log file")
 	flag.BoolVar(&noinfo, "e", false, "Skips info log entries, only shows errors")
 	flag.BoolVar(&flag_help, "help", false, "Program help info")
 	flag.Parse()
 
 	// Enable writing log to file
-	if logfile == true {
-		logging(path, noinfo, logfile)
+	if logon == true {
+		logging(path, noinfo, logon, logfile)
 	}
 
 	//path := filepath.Clean(flag_path)
@@ -52,15 +54,19 @@ func main() {
 		display_help()
 	} else if path != "" {
 		path = filepath.Clean(path)
-		scan(path, skip, noinfo, logfile)
+		scan(path, skip, noinfo, logon)
 	}
 
 }
 
-func logging(path string, noinfo bool, logfile bool) {
-	// Save log into file
-	path = filepath.Clean(path)
-	path = filepath.Join(path, log_name)
+func logging(path string, noinfo bool, logon bool, logfile string) {
+
+	if logfile != "" {
+		path = filepath.Clean(logfile)
+	} else {
+		path = filepath.Clean(path)
+		path = filepath.Join(path, log_name)
+	}
 
 	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
@@ -69,14 +75,13 @@ func logging(path string, noinfo bool, logfile bool) {
 
 	log.SetOutput(file)
 
-	// Log start of scan for log
-	if noinfo == true && logfile == true {
+	if noinfo == true && logon == true {
 		log.Println("info: Scan started")
 	}
 
 }
 
-func scan(path string, skip bool, noinfo bool, logfile bool) {
+func scan(path string, skip bool, noinfo bool, logon bool) {
 
 	// Do checks on path
 	// Does it end with /
@@ -93,12 +98,6 @@ func scan(path string, skip bool, noinfo bool, logfile bool) {
 		// Quit application
 		log.Fatal("Fatal: directory does not exist")
 	}
-
-	//if slash_check != "/" {
-	// Add the slash at the end of string
-	//	slash_check = slash_check + "/"
-	//	log.Println("info: added trailing slash to path", path + "/")
-	//}
 
 	// Count the full path length provided to get to the
 	// working directory. Later used as shortened path to
@@ -144,7 +143,7 @@ func scan(path string, skip bool, noinfo bool, logfile bool) {
 			}
 
 			// 0 means skip the missing file scan
-			start_scan(path, path_count, 0, noinfo, logfile)
+			start_scan(path, path_count, 0, noinfo, logon)
 
 		case "n":
 			os.Exit(1)
@@ -160,13 +159,13 @@ func scan(path string, skip bool, noinfo bool, logfile bool) {
 		// function and tell not to do the missing file scan
 		// 1 sent through function to say do not run missing files
 
-		start_scan(path, path_count, 1, noinfo, logfile)
+		start_scan(path, path_count, 1, noinfo, logon)
 
 	}
 
 }
 
-func start_scan(path string, path_count int, look_missing int, noinfo bool, logfile bool) {
+func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool) {
 
 	// Db file is new, so no point looking for
 	// missing files as this is first run on directory
@@ -191,7 +190,7 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logf
 
 	if noinfo == false {
 		log.Println("info: finished")
-	} else if noinfo == true && logfile == true {
+	} else if noinfo == true && logon == true {
 		log.Println("info: finished")
 	}
 
