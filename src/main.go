@@ -63,7 +63,7 @@ func main() {
 
 func logging(path string, noinfo bool, logon bool, logfile string) {
 
-	if logfile != "" {
+	if logfile != " " {
 		path = filepath.Clean(logfile)
 	} else {
 		path = filepath.Clean(path)
