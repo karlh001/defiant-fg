@@ -74,7 +74,7 @@ To run the application to on a schedule or through a script, add the `-l` and `-
 
 ## Database File 
 
-This file is portable and should move with the directory, such as back up to remote storage or migration to new hard drive. It contains the path to file, hash of file, and basic meta data. Database file is named `dfg.db`
+This file is portable and should move with the directory, such as back up to remote storage or migration to new drive. It contains the path to file, hash of file, and basic meta data. Database file is named `dfg.db`; to change the location of the database file use `-db /path/to/file.sql`.
 
 ## Manual
 

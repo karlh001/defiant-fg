@@ -7,7 +7,7 @@ Choose directory to scan. For example:
 
 	dfg -d /mnt/usb/pictures/
 
-Note: the -d should be the last argument. Use other flags before this. 
+For documentation consistency, I always put the path flag at the end of the command, but this is not necessary. 
 
 ### Skip
 `-s`
