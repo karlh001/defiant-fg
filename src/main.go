@@ -134,7 +134,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string) {
 
 			// Yes selected, so user happy to create the database
 			// file and contine
-			db_output := create_database(path)
+			db_output := create_database(path, dbfile)
 			if db_output == 0 {
 				if noinfo == false {
 					log.Println("info: database file created")

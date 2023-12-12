@@ -2,7 +2,7 @@
 This mod connects to SQLite database
 
 Karl Hunter 2023
-2023-11-21
+2023-12-12
 https://www.karlhunter.co.uk/defiant
 
 */
@@ -20,9 +20,18 @@ import (
 )
 
 // If database does not exist create new
-func create_database(path string) int {
+func create_database(path string, dbfile string) int {
 
-	db, err := sql.Open("sqlite3", filepath.Join(path, db_name))
+	var db_path string
+
+	// User-defined db location
+	if dbfile != " " {
+		db_path = filepath.Clean(dbfile)
+	} else {
+		db_path = filepath.Join(path, db_name)
+	}
+
+	db, err := sql.Open("sqlite3", db_path)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
