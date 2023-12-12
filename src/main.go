@@ -16,7 +16,7 @@ import (
 )
 
 const app_ver string = "1.2.2"
-const app_date string = "2023-12-02"
+const app_date string = "2023-12-12"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 

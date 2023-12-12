@@ -2,10 +2,10 @@
 
 ## Version 1.2.2
 
-2023-11-XX
+2023-12-12
 
 * New flag: choose own [database](db.md) location
-* New flag: choose own [log](logging.md) file location
+* New flag: choose own [log](log.md) file location
 * New flag: show help
 * Shows new files in log and in terminal
 * Documentation update and error corrections

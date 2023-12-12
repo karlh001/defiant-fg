@@ -33,6 +33,8 @@ func display_help() {
 	fmt.Println("-l			Create log file within directory scanned")
 	fmt.Println("-e			Out log/output errors, ignores info:")
 	fmt.Println("-s			Skips user input, such as confirm db creation")
+	fmt.Println("-log			Location to the log file. Need to use -l too.")
+	fmt.Println("-db			Location to the database; default root of directory")
 	fmt.Println("")
 	fmt.Println("dfg [-version | -help] [-l -e -s -d] /path/to/directory/")
 	fmt.Println("")
