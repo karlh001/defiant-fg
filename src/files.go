@@ -14,6 +14,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/TwiN/go-color"
 )
 
 func iterate(path string, path_count int, noinfo bool, dbfile string) int {
@@ -70,7 +72,7 @@ func iterate(path string, path_count int, noinfo bool, dbfile string) int {
 			// Add file with hash to the map
 			hashmap[short_path] = file_hash
 			if noinfo == false {
-				log.Println("new:", path)
+				log.Println(color.Blue + "new: " + path + color.Reset)
 			}
 		}
 

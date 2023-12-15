@@ -16,6 +16,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TwiN/go-color"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -164,7 +165,7 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 
 		// Check the hash against the OS path and DB path
 		if s_hash != hash {
-			log.Println("error: failed hash on ", full_path+short_path)
+			log.Println(color.Red + "error: failed hash on " + full_path + short_path + color.Reset)
 		}
 
 		return 0
@@ -211,7 +212,7 @@ func missing_files_scan(full_path string, dbfile string) int {
 		// Check if the file exists
 		// If not returns 0, the warn user
 		if is_file(sys_path) != 1 {
-			log.Println("missing:", s_path)
+			log.Println(color.Yellow + "missing: " + s_path + color.Reset)
 		}
 
 		if err != nil {
