@@ -18,7 +18,7 @@ import (
 	"github.com/TwiN/go-color"
 )
 
-func iterate(path string, path_count int, noinfo bool, dbfile string) int {
+func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool) int {
 
 	// Path is full path to file; e.g. /dir/hello-world.txt
 	// short_path is dir after or just file name
@@ -61,7 +61,7 @@ func iterate(path string, path_count int, noinfo bool, dbfile string) int {
 		// Check database to see if we have seen this
 		// file before; need to use the short path
 		// because it's the short path stored in sql
-		file_check_result := check_file_sql(short_path, full_path, file_hash, dbfile)
+		file_check_result := check_file_sql(short_path, full_path, file_hash, dbfile, logon)
 
 		// Runs this if statement if
 		// is a file, not directory AND
@@ -72,7 +72,11 @@ func iterate(path string, path_count int, noinfo bool, dbfile string) int {
 			// Add file with hash to the map
 			hashmap[short_path] = file_hash
 			if noinfo == false {
-				log.Println(color.Blue + "new: " + path + color.Reset)
+				if logon == true {
+					log.Println("new: " + path)
+				} else {
+					log.Println(color.Blue + "new: " + path + color.Reset)
+				}
 			}
 		}
 

@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 1.2.3
+
+2023-12-XX
+
+* Colour coded terminal lines
+	* red for failed hashes
+	* orange for missing files
+	* blue for new files
+
 ## Version 1.2.2
 
 2023-12-12

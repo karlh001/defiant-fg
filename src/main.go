@@ -176,7 +176,7 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 	// missing files as this is first run on directory
 	// Send path to function and cycle through all files
 	// and directories to generate hashes
-	iterate(path, path_count, noinfo, dbfile)
+	iterate(path, path_count, noinfo, dbfile, logon)
 
 	// Run a scan to check for missing files
 	// Only run is db was existing
@@ -186,7 +186,7 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 			log.Println("info: checking for missing files")
 		}
 
-		missing_files_scan(path, dbfile)
+		missing_files_scan(path, dbfile, logon)
 
 	}
 

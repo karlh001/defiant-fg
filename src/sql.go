@@ -126,7 +126,7 @@ func write_files_sql(path string, hashmap map[string]string, noinfo bool, dbfile
 // Function to check if the file exists in the database
 // This function is called from the iterate function found in
 // the files.go package
-func check_file_sql(short_path string, full_path string, hash string, dbfile string) int {
+func check_file_sql(short_path string, full_path string, hash string, dbfile string, logon bool) int {
 
 	// Check if first record, the given diectory
 	if short_path == "" {
@@ -165,7 +165,11 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 
 		// Check the hash against the OS path and DB path
 		if s_hash != hash {
-			log.Println(color.Red + "error: failed hash on " + full_path + short_path + color.Reset)
+			if logon == true {
+				log.Println("error: failed hash on " + full_path + short_path)
+			} else {
+				log.Println(color.Red + "error: failed hash on " + full_path + short_path + color.Reset)
+			}
 		}
 
 		return 0
@@ -177,7 +181,7 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 }
 
 // Query database and check files are still present
-func missing_files_scan(full_path string, dbfile string) int {
+func missing_files_scan(full_path string, dbfile string, logon bool) int {
 
 	// Iterate through directory using db records
 	// if exists, skip. If record in db but not file
@@ -212,7 +216,12 @@ func missing_files_scan(full_path string, dbfile string) int {
 		// Check if the file exists
 		// If not returns 0, the warn user
 		if is_file(sys_path) != 1 {
-			log.Println(color.Yellow + "missing: " + s_path + color.Reset)
+			// Remove colour if log file
+			if logon == true {
+				log.Println("missing: " + s_path)
+			} else {
+				log.Println(color.Yellow + "missing: " + s_path + color.Reset)
+			}
 		}
 
 		if err != nil {
