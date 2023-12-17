@@ -13,4 +13,5 @@ nav:
   - Contact: contact.md
   - Bugs: bugs.md
   - Credits: credits.md
+  - Donate: donate.md
 theme: readthedocs

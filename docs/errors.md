@@ -18,9 +18,15 @@ Although FG was able to open the database, it could not query the rows. This is 
 
 ## Hash
 
-	error: failed hash on /path/to/file.JPG
+	fail: /path/to/file.JPG
 
 This is what FG was designed to do. This messages means the file has been altered or became damaged. Restore the file from back and run the scan again.
+
+Previous prior to 1.2.3 will report failed hash as below:
+
+	error: failed hash on /path/to/file.JPG
+
+
 
 ## File System
 

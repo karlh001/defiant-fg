@@ -166,9 +166,9 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 		// Check the hash against the OS path and DB path
 		if s_hash != hash {
 			if logon == true {
-				log.Println("error: failed hash on " + full_path + short_path)
+				log.Println("fail: " + full_path + short_path)
 			} else {
-				log.Println(color.Red + "error: failed hash on " + full_path + short_path + color.Reset)
+				log.Println(color.Red + "fail: " + full_path + short_path + color.Reset)
 			}
 		}
 
