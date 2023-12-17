@@ -30,7 +30,7 @@ Note: will also not show a line for new files.
 
 Add the l flag to output to a log file. Your terminal will no longer show verbose. More on the [log file](log.md).
 
-`-log'
+`-log`
 
 Specify the location of the log file. Log entries append to previous log lines (log files do not overwrite).
 

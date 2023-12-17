@@ -18,11 +18,27 @@ The object (such as picture, video or document) is put through a mathematical fo
 
 FG uses the SHA-256 algorithm to generate hashes. For example the word "DEFIANT-FG" run through SHA-256 will become: 2948a9654f6276d7de69e60c9304ece662f9ba17c667e6dfcd4dacf38661192b. If I change the last character from "G" to "g" and run again, the hash will completely change: 121089879462d657a7938d8e44b909d6cabfde31f525a13c04be0a534ee61f5e 
 
-## Download and Install
-
-This read me is designed to be brief to allow you to start enjoying FG as soon as possible. For more detail, please read the [manual](https://karlhunter.co.uk/defiant/). 
-
 ## Download
+
+### DEB package
+
+On Debian based operating systems (such as Ubuntu, Linux Mint), download the deb package. On desktop versions, open package and click `install package`. 
+
+Or, via command line:
+
+Download
+
+	wget https://github.com/karlh001/defiant-fg/raw/main/bin/deb_pkgs/dfg_amd64.deb
+
+Install (as root)
+
+	dpkg --install dfg_amd64.deb
+
+Done.
+
+Alternatively, download the release, extract and follow _Install_.
+
+## Releases
 
 [Click here](https://github.com/karlh001/defiant-fg/releases) for releases.
 
@@ -78,8 +94,8 @@ This file is portable and should move with the directory, such as back up to rem
 
 ## Manual
 
-For more detail, read the manual [here](https://karlhunter.co.uk/defiant/).
+This read me is designed to be brief to allow you to start enjoying FG as soon as possible. For more detail, please read the [manual](https://karlhunter.co.uk/defiant/). 
 
 ## Help
 
-If you would like to contribute, please commit changes and I will be happy for the help.
+If you would like to contribute, please commit changes and I will be happy for the help. Also if you find this tool useful please buy me a [coffee](https://ko-fi.com/karlh) or [PayPal](https://www.paypal.com/donate/?hosted_button_id=UUM7AGH7CTZWY) donation.

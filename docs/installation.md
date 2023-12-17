@@ -6,11 +6,21 @@
 
 On Debian based operating systems (such as Ubuntu, Linux Mint), download the deb package. On desktop versions, open package and click `install package`. 
 
+Or, via command line:
+
+Download
+
+	wget https://github.com/karlh001/defiant-fg/raw/main/bin/deb_pkgs/dfg_amd64.deb
+
+Install (as root)
+
+	dpkg --install dfg_amd64.deb
+
 Done.
 
-### CLI Install
+### Manual Install
 
-However, if you are running another Linux operating system or prefer not use use deb packages follow this instructions:
+However, if you are running another Linux operating system or prefer not use use deb packages follow these instructions:
 
 For manual installation on Linux, download the source code from the releases section, extract the tar and change directory to the build directory (e.g. `cd ~/Downloads/defiant-fg-main/`.
 

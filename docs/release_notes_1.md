@@ -2,7 +2,7 @@
 
 ## Version 1.2.3
 
-2023-12-XX
+2023-12-17
 
 * Colour coded terminal lines
 	* red for failed hashes

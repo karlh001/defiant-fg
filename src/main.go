@@ -15,8 +15,8 @@ import (
 	"unicode/utf8"
 )
 
-const app_ver string = "1.2.2"
-const app_date string = "2023-12-12"
+const app_ver string = "1.2.3"
+const app_date string = "2023-12-17"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 

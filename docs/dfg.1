@@ -11,7 +11,7 @@
 .Nm dfg
 .Sh SYNOPSIS             \" Section Header - required - don't modify
 .Nm
-.Op Fl l | -s | -e | -d /path/to/dir             \" [-abcd]
+.Op Fl l log | s | e | db | d             \"]
 .Op Fl version         \" [-a path]
 .Sh DESCRIPTION          \" Section Header - required - don't modify
 .Nm
@@ -28,6 +28,10 @@ Skip user inputs, use for scripting
 Does not display info messages; only shows errors
 .It Fl l
 Create log output file, located root dir named dfg.log
+.It Fl log
+Custom location of log file; must end with log file not directory
+.It Fl db
+Custom location of the database file; must end with db file not directory
 .It Fl d
 Specify directory to scan
 .El                      \" Ends the list
