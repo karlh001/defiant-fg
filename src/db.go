@@ -7,7 +7,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 func db_tool_func(dbcommand string, dbfile string) {
@@ -21,29 +20,11 @@ func db_tool_func(dbcommand string, dbfile string) {
 	*/
 
 	if dbcommand == "del" {
-
-		var choice string
 		var db_ID int
-
-		// This will disable the entry in given by the user
-
 		fmt.Println("Database tool using the following database:", dbfile)
-
 		fmt.Println("Type ID of record to delete:")
 		fmt.Scan(&db_ID)
-
-		fmt.Println("You have chosen:", db_ID)
-
-		fmt.Println("Correct? [y/n]")
-		fmt.Scan(&choice)
-
-		switch choice {
-		case "y":
-			disable_sql_func(dbfile, db_ID)
-		default:
-			fmt.Println("Delete operation was cancelled")
-			os.Exit(1)
-		}
+		disable_sql_func(dbfile, db_ID)
 
 	}
 

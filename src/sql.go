@@ -259,10 +259,8 @@ func clean_string(filename string, do int) string {
 }
 
 func disable_sql_func(dbfile string, db_ID int) {
-
 	var db_path string
 	db_path = filepath.Clean(dbfile)
-
 	db, err := sql.Open("sqlite3", db_path)
 
 	if err != nil {
@@ -271,7 +269,6 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 	defer db.Close()
 
-	// Display file name to confirm with user if correct:
 	rows, err := db.Query("SELECT path FROM main.objects WHERE main.objects.ID_object=?", db_ID)
 	defer rows.Close()
 
@@ -291,7 +288,7 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 		switch choice {
 		case "y":
-			fmt.Println("deleted!")
+			disable_sql_do_func(dbfile, db_ID)
 		default:
 			fmt.Println("Delete operation was cancelled")
 			os.Exit(1)
@@ -299,18 +296,25 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 	}
 
-	/*
-			// Write change to database
-			sts := `
-			UPDATE main.objects SET enabled = 0 WHERE main.objects.ID_object = 2
-		        `
-			_, err = db.Exec(sts)
+}
 
-			if err != nil {
-				log.Fatal(err)
-				return 1
-			}
-	*/
-	//return 0
+func disable_sql_do_func(dbfile string, db_ID int) {
+	var db_path string
+	db_path = filepath.Clean(dbfile)
+	db, err := sql.Open("sqlite3", db_path)
+
+	if err != nil {
+		log.Fatal("fatal: could not connect to db", err)
+	}
+
+	defer db.Close()
+
+	_, err = db.Exec("UPDATE main.objects SET enabled = 0 WHERE main.objects.ID_object=?", db_ID)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Delete request completed")
 
 }
