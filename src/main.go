@@ -15,8 +15,8 @@ import (
 	"unicode/utf8"
 )
 
-const app_ver string = "1.2.4"
-const app_date string = "2024-03-07"
+const app_ver string = "1.3"
+const app_date string = "2024-02-18"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -26,6 +26,7 @@ func main() {
 	var path string
 	var logfile string
 	var dbfile string
+	var dbcommand string
 	noinfo := false
 	version := false
 	skip := false
@@ -35,6 +36,7 @@ func main() {
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
+	flag.StringVar(&dbcommand, "data", " ", "Specify database command")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
 	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
@@ -56,9 +58,15 @@ func main() {
 		about_info()
 	} else if flag_help {
 		display_help()
-	} else if path != "" {
+	} else if path != " " && dbcommand != "" {
 		path = filepath.Clean(path)
 		scan(path, skip, noinfo, logon, dbfile, skip_missing_files)
+	} else if len(dbcommand) > 0 {
+		// Start db tools
+		dbfile = filepath.Clean(dbfile)
+		db_tool_func(dbcommand, dbfile)
+	} else {
+		log.Fatal("No options selected")
 	}
 
 }

@@ -11,7 +11,9 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -253,5 +255,62 @@ func clean_string(filename string, do int) string {
 	}
 
 	return filename
+
+}
+
+func disable_sql_func(dbfile string, db_ID int) {
+
+	var db_path string
+	db_path = filepath.Clean(dbfile)
+
+	db, err := sql.Open("sqlite3", db_path)
+
+	if err != nil {
+		log.Fatal("fatal: could not connect to db", err)
+	}
+
+	defer db.Close()
+
+	// Display file name to confirm with user if correct:
+	rows, err := db.Query("SELECT path FROM main.objects WHERE main.objects.ID_object=?", db_ID)
+	defer rows.Close()
+
+	if err != nil {
+		log.Fatal("Error: unable to locate ID; is it correct?")
+		os.Exit(1)
+	}
+
+	for rows.Next() {
+		var path string
+		var choice string
+		rows.Scan(&path)
+
+		fmt.Println("File to delete:", path)
+		fmt.Println("Correct? [y/n]")
+		fmt.Scan(&choice)
+
+		switch choice {
+		case "y":
+			fmt.Println("deleted!")
+		default:
+			fmt.Println("Delete operation was cancelled")
+			os.Exit(1)
+		}
+
+	}
+
+	/*
+			// Write change to database
+			sts := `
+			UPDATE main.objects SET enabled = 0 WHERE main.objects.ID_object = 2
+		        `
+			_, err = db.Exec(sts)
+
+			if err != nil {
+				log.Fatal(err)
+				return 1
+			}
+	*/
+	//return 0
 
 }
