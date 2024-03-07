@@ -15,8 +15,8 @@ import (
 	"unicode/utf8"
 )
 
-const app_ver string = "1.2.3"
-const app_date string = "2023-12-17"
+const app_ver string = "1.2.4"
+const app_date string = "2024-03-07"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -31,6 +31,7 @@ func main() {
 	skip := false
 	logon := false
 	flag_help := false
+	skip_missing_files := false
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
@@ -38,6 +39,7 @@ func main() {
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
 	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
 	flag.StringVar(&logfile, "log", " ", "User defined log file")
+	flag.BoolVar(&skip_missing_files, "skip-missing", false, "Skip missing file scan")
 	flag.StringVar(&dbfile, "db", " ", "User defined log file")
 	flag.BoolVar(&noinfo, "e", false, "Skips info log entries, only shows errors")
 	flag.BoolVar(&flag_help, "help", false, "Program help info")
@@ -56,7 +58,7 @@ func main() {
 		display_help()
 	} else if path != "" {
 		path = filepath.Clean(path)
-		scan(path, skip, noinfo, logon, dbfile)
+		scan(path, skip, noinfo, logon, dbfile, skip_missing_files)
 	}
 
 }
@@ -83,7 +85,7 @@ func logging(path string, noinfo bool, logon bool, logfile string) {
 
 }
 
-func scan(path string, skip bool, noinfo bool, logon bool, dbfile string) {
+func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_missing_files bool) {
 
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
@@ -148,7 +150,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string) {
 			}
 
 			// 0 means skip the missing file scan
-			start_scan(path, path_count, 0, noinfo, logon, dbfile)
+			start_scan(path, path_count, 0, noinfo, logon, dbfile, skip_missing_files)
 
 		case "n":
 			os.Exit(1)
@@ -164,13 +166,13 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string) {
 		// function and tell not to do the missing file scan
 		// 1 sent through function to say do not run missing files
 
-		start_scan(path, path_count, 1, noinfo, logon, dbfile)
+		start_scan(path, path_count, 1, noinfo, logon, dbfile, skip_missing_files)
 
 	}
 
 }
 
-func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool, dbfile string) {
+func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool, dbfile string, skip_missing_files bool) {
 
 	// Db file is new, so no point looking for
 	// missing files as this is first run on directory
@@ -180,13 +182,20 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 
 	// Run a scan to check for missing files
 	// Only run is db was existing
-	if look_missing != 0 {
+	// Skip is skip-missing flag given
+	if look_missing != 0 && skip_missing_files == false {
 
 		if noinfo == false {
 			log.Println("info: checking for missing files")
 		}
 
 		missing_files_scan(path, dbfile, logon)
+
+	} else {
+
+		if noinfo == false {
+			log.Println("info: skipped missing file scan")
+		}
 
 	}
 
