@@ -38,6 +38,12 @@ Example:
 
 	dfg -l -log /var/log/pictures.log -d /mnt/usb/pictures/
 
+### Skip missing file scan
+
+`--skip-missing`
+
+Skips the missing file scan. You will not be notified about missing / deleted files which exist in the database.
+
 ### Database file location
 
 `-db`

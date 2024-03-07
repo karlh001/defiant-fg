@@ -4,7 +4,7 @@
 
 ## About
 
-DEFIANT-FG (FG) is a light-weight command line utility designed to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional objects are added to the database at the next run. 
+DEFIANT-FG (FG) is a light-weight, command-line utility written to check file (object) integrity within a directory structure. The hash of the object is stored within a database located within the root of the given directory. You can easily move this file with the directory between computers. Additional objects are added to the database at the next run. 
 
 Run periodically to check the integrity of your static archive or backup. New and unknown objects are added to the database at next run, so you can easily grow the directory. FG will, however, log failed hashes (such as bit rot or corrupted objects) and missing objects.  
  
