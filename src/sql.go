@@ -270,13 +270,17 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 	defer db.Close()
 
-	rows, err := db.Query("SELECT path FROM main.objects WHERE main.objects.ID_object=?", db_ID)
-	defer rows.Close()
+	rows, err := db.Query("SELECT path FROM main.objects WHERE main.objects.enabled = 1 AND main.objects.ID_object=?", db_ID)
 
 	if err != nil {
-		log.Fatal("Error: unable to locate ID; is it correct?")
-		os.Exit(1)
+		log.Fatal("error: unable to locate ID; is it correct?")
 	}
+
+	if rows == nil {
+		log.Fatal("error: record not found!")
+	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		var path string
@@ -289,11 +293,13 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 		switch choice {
 		case "y":
+			rows.Close()
 			disable_sql_do_func(dbfile, db_ID)
 		case "Y":
+			rows.Close()
 			disable_sql_do_func(dbfile, db_ID)
 		default:
-			fmt.Println("Delete operation was cancelled")
+			fmt.Println("info: delete operation was cancelled")
 			os.Exit(1)
 		}
 
@@ -318,7 +324,7 @@ func disable_sql_do_func(dbfile string, db_ID int) {
 	_, err = db.Exec("UPDATE objects SET enabled = 0 WHERE objects.ID_object=?", db_ID)
 	// ERROR. DATABASE LOCKED???
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error:", err)
 	}
 
 	fmt.Println("Delete request completed")

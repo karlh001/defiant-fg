@@ -36,7 +36,7 @@ func main() {
 
 	// flags declaration using flag package
 	flag.StringVar(&path, "d", " ", "Specify directory")
-	flag.StringVar(&dbcommand, "data", " ", "Specify database command")
+	flag.StringVar(&dbcommand, "data", " ", "Specify database command, e.g. del")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
 	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
@@ -63,6 +63,10 @@ func main() {
 		scan(path, skip, noinfo, logon, dbfile, skip_missing_files)
 	} else if len(dbcommand) > 0 {
 		// Start db tools
+		if dbfile == " " {
+			log.Println("error: you need to include database file. Use: -db /path/to/dfg.db")
+			os.Exit(1)
+		}
 		dbfile = filepath.Clean(dbfile)
 		db_tool_func(dbcommand, dbfile)
 	} else {
