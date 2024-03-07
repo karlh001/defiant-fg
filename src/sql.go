@@ -2,7 +2,7 @@
 This mod connects to SQLite database
 
 Karl Hunter 2023
-2023-12-12
+2024-03-02
 https://www.karlhunter.co.uk/defiant
 
 */
@@ -198,7 +198,7 @@ func missing_files_scan(full_path string, dbfile string, logon bool) int {
 
 	defer db.Close()
 
-	rows, err := db.Query("SELECT path FROM objects WHERE objects.enabled = 1 ORDER BY objects.ID_object DESC;")
+	rows, err := db.Query("SELECT ID_object as ID, path FROM objects WHERE objects.enabled = 1 ORDER BY objects.ID_object DESC;")
 
 	if err != nil {
 		log.Fatal("fatal: db query error: ", err)
@@ -208,7 +208,8 @@ func missing_files_scan(full_path string, dbfile string, logon bool) int {
 
 	for rows.Next() {
 		var s_path string
-		err = rows.Scan(&s_path)
+		var s_ID int
+		err = rows.Scan(&s_ID, &s_path)
 
 		// Add back special characters
 		s_path = clean_string(s_path, 0)
@@ -220,9 +221,9 @@ func missing_files_scan(full_path string, dbfile string, logon bool) int {
 		if is_file(sys_path) != 1 {
 			// Remove colour if log file
 			if logon == true {
-				log.Println("missing: " + s_path)
+				log.Println("missing: "+s_path, "ID:", s_ID)
 			} else {
-				log.Println(color.Yellow + "missing: " + s_path + color.Reset)
+				log.Println(color.Yellow+"missing: "+s_path, "ID:", s_ID, color.Reset)
 			}
 		}
 
@@ -282,12 +283,14 @@ func disable_sql_func(dbfile string, db_ID int) {
 		var choice string
 		rows.Scan(&path)
 
-		fmt.Println("File to delete:", path)
+		fmt.Println("File entry to delete:", path)
 		fmt.Println("Correct? [y/n]")
 		fmt.Scan(&choice)
 
 		switch choice {
 		case "y":
+			disable_sql_do_func(dbfile, db_ID)
+		case "Y":
 			disable_sql_do_func(dbfile, db_ID)
 		default:
 			fmt.Println("Delete operation was cancelled")
@@ -299,6 +302,9 @@ func disable_sql_func(dbfile string, db_ID int) {
 }
 
 func disable_sql_do_func(dbfile string, db_ID int) {
+
+	// Execute update command to 'delete' row as defined by user
+
 	var db_path string
 	db_path = filepath.Clean(dbfile)
 	db, err := sql.Open("sqlite3", db_path)
@@ -309,8 +315,8 @@ func disable_sql_do_func(dbfile string, db_ID int) {
 
 	defer db.Close()
 
-	_, err = db.Exec("UPDATE main.objects SET enabled = 0 WHERE main.objects.ID_object=?", db_ID)
-
+	_, err = db.Exec("UPDATE objects SET enabled = 0 WHERE objects.ID_object=?", db_ID)
+	// ERROR. DATABASE LOCKED???
 	if err != nil {
 		log.Fatal(err)
 	}
