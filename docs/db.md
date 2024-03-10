@@ -55,5 +55,4 @@ The database tool will ask for ID of record to delete; this is this ID given in 
 	y
 	Delete request completed
 
-
-
+The entry will remain in the database but will be disabled, which will not reduce size of the database file. Future releases will have a clean-up feature.

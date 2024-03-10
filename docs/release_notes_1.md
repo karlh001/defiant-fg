@@ -1,11 +1,18 @@
 # Release Notes
 
+## Version 1.3
+
+2024-03-XX
+
+* Database tools: allow removal of entry
+* Removed "info: scanning files" from output
+
 ## Version 1.2.4
 
 2024-03-07
 
-Added skip missing file scan flag
-Removed pre-build binary and deb package for ARM processors.
+* Added skip missing file scan flag
+* Removed pre-build binary and deb package for ARM processors.
 
 ## Version 1.2.3
 

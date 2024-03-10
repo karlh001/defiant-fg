@@ -52,14 +52,11 @@ On other Linux, run the install script as root.
 
 	sudo sh build/INSTALL_LINUX.sh
 
-On ARM processors, such as Raspberry Pi
-	
-	sudo sh build/INSTALL_ARM.sh
-
 This script will copy necessary files so allow you to run in the command line:
 
 	dfg
 
+If you need to run another platform, please read the [build](build.md) guide.
 
 ## Usage 
 

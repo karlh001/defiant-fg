@@ -27,10 +27,6 @@ func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool
 	hashmap := map[string]string{}
 	full_path := path
 
-	if noinfo == false {
-		log.Println("info: scanning files")
-	}
-
 	// This function will cycle through the directory and print
 	// files and directories.
 	// If there was an error, e.g. permissions, then error message
