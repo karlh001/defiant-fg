@@ -2,7 +2,7 @@
 This mod connects to SQLite database
 
 Karl Hunter 2023
-2024-03-02
+2024-03-13
 https://www.karlhunter.co.uk/defiant
 
 */
@@ -328,5 +328,39 @@ func disable_sql_do_func(dbfile string, db_ID int) {
 	}
 
 	fmt.Println("Delete request completed")
+
+}
+
+func check_same_files(dbfile string) {
+
+	// Query database for duplicate files
+
+	db, err := sql.Open("sqlite3", dbfile)
+
+	if err != nil {
+		log.Fatal("fatal: could not connect to db", err)
+	}
+
+	defer db.Close()
+
+	rows, err := db.Query("SELECT count(*) as Duplicate_Hash, path, ID_object FROM objects GROUP BY hash HAVING COUNT(*) > 1 AND enabled = 1 ORDER BY Duplicate_Hash DESC;")
+
+	if err != nil {
+		log.Fatal("error: database error")
+	}
+
+	if rows == nil {
+		log.Fatal("info: finished and no duplicates found")
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var Duplicate_Hash string
+		var path string
+		var ID_object string
+		rows.Scan(&Duplicate_Hash, &path, &ID_object)
+		fmt.Println("("+Duplicate_Hash+")", path, "["+ID_object+"]")
+	}
 
 }

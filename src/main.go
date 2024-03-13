@@ -16,7 +16,7 @@ import (
 )
 
 const app_ver string = "1.3"
-const app_date string = "2024-03-02"
+const app_date string = "2024-03-XX"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -52,9 +52,7 @@ func main() {
 		logging(path, noinfo, logon, logfile)
 	}
 
-	//path := filepath.Clean(flag_path)
 	if version == true {
-		// Display about info
 		about_info()
 	} else if flag_help {
 		display_help()
@@ -67,8 +65,17 @@ func main() {
 			log.Println("error: you need to include database file. Use: -db /path/to/dfg.db")
 			os.Exit(1)
 		}
+
 		dbfile = filepath.Clean(dbfile)
-		db_tool_func(dbcommand, dbfile)
+
+		if dbcommand == "del" {
+			db_tool_func(dbcommand, dbfile)
+		}
+
+		if dbcommand == "same" {
+			check_same_files(dbfile)
+		}
+
 	} else {
 		log.Fatal("No options selected")
 	}
