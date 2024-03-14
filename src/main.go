@@ -16,7 +16,7 @@ import (
 )
 
 const app_ver string = "1.3"
-const app_date string = "2024-03-XX"
+const app_date string = "2024-03-14"
 const db_name string = "dfg.db"
 const log_name string = "dfg.log"
 
@@ -146,7 +146,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 
 		} else {
 			// Confirmation message
-			fmt.Println("No datbase file: do you want to continue (y/n)?")
+			fmt.Println("No database file: do you want to continue (y/n)?")
 			fmt.Scan(&choice)
 		}
 
@@ -225,33 +225,6 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 		log.Println("info: finished")
 	} else if noinfo == true && logon == true {
 		log.Println("info: finished")
-	}
-
-}
-
-func backup_db(path string) {
-
-	// BACKUP FEATURE NOT YET COMPLETED
-	// PLEASE HELP IF CAN
-	// WANT TO RUN AFTER SCAN, COMPRESS THE DATABASE AND
-	// STORE ~/.defiant-fg/backup
-	// e.g. current working directory followed by db
-	// YYYYMMDDHHMM_pictures_dfg.db
-	// Cleaning perhaps keep last 5 copies
-
-	// Get home dir
-	dirname, err := os.UserHomeDir()
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
-
-	// Check backup dir exists
-	backup_dir := dirname + "/.defiantfg/backup"
-
-	err = os.MkdirAll(backup_dir, 0775)
-	if err != nil {
-		log.Println("error: could not create backup directory")
 	}
 
 }

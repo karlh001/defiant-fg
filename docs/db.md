@@ -56,3 +56,15 @@ The database tool will ask for ID of record to delete; this is this ID given in 
 	Delete request completed
 
 The entry will remain in the database but will be disabled, which will not reduce size of the database file. Future releases will have a clean-up feature.
+
+## Find Duplicates
+
+This will search database file for duplicated files with the same hashes. The command will return occurrences (2) and name of one of the files.
+
+	dfg -data same -db /path/to/dfg.db
+
+You must specify database file.
+
+Example output:
+
+	(2) /pictures/photo1.jpg

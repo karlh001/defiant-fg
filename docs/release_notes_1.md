@@ -2,10 +2,12 @@
 
 ## Version 1.3
 
-2024-03-XX
+2024-03-14
 
 * Database tools: allow removal of entry
+* Database tools: find duplicates
 * Removed "info: scanning files" from output
+* Fixed typo
 
 ## Version 1.2.4
 
