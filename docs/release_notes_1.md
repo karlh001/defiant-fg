@@ -1,5 +1,13 @@
 # Release Notes
 
+## Version 1.3.1
+
+2024-04-XX
+
+* Block size flag `--bs` 
+* Minor code tidying
+* SQLite3 upgraded to version 1.14.22
+
 ## Version 1.3
 
 2024-03-14

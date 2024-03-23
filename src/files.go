@@ -18,7 +18,7 @@ import (
 	"github.com/TwiN/go-color"
 )
 
-func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool) int {
+func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool, BlockSize int) int {
 
 	// Path is full path to file; e.g. /dir/hello-world.txt
 	// short_path is dir after or just file name
@@ -42,7 +42,7 @@ func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool
 		// Feed the path and file through the hash function
 		// This will return the hash value
 		// hash.go
-		file_hash := hash_function(path)
+		file_hash := hash_function(path, BlockSize)
 
 		// Grab the first x characters for path
 		//full_path := path[0:path_count]
@@ -67,8 +67,8 @@ func iterate(path string, path_count int, noinfo bool, dbfile string, logon bool
 
 			// Add file with hash to the map
 			hashmap[short_path] = file_hash
-			if noinfo == false {
-				if logon == true {
+			if !noinfo {
+				if logon {
 					log.Println("new: " + path)
 				} else {
 					log.Println(color.Blue + "new: " + path + color.Reset)

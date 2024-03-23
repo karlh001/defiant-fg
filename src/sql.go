@@ -88,7 +88,7 @@ func write_files_sql(path string, hashmap map[string]string, noinfo bool, dbfile
 
 	// Warn user; if more than 10 warn this may take a while
 	if new_files_count > 0 {
-		if noinfo == false {
+		if !noinfo {
 			log.Println("info: writing block of hashes to database", new_files_count)
 		}
 	}
@@ -167,7 +167,7 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 
 		// Check the hash against the OS path and DB path
 		if s_hash != hash {
-			if logon == true {
+			if logon {
 				log.Println("fail: " + full_path + short_path)
 			} else {
 				log.Println(color.Red + "fail: " + full_path + short_path + color.Reset)
@@ -220,7 +220,7 @@ func missing_files_scan(full_path string, dbfile string, logon bool) int {
 		// If not returns 0, the warn user
 		if is_file(sys_path) != 1 {
 			// Remove colour if log file
-			if logon == true {
+			if logon {
 				log.Println("missing: "+s_path, "ID:", s_ID)
 			} else {
 				log.Println(color.Yellow+"missing: "+s_path, "ID:", s_ID, color.Reset)

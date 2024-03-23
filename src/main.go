@@ -30,6 +30,7 @@ func main() {
 	noinfo := false
 	version := false
 	skip := false
+	BlockSize := 0
 	logon := false
 	flag_help := false
 	skip_missing_files := false
@@ -39,6 +40,7 @@ func main() {
 	flag.StringVar(&dbcommand, "data", " ", "Specify database command, e.g. del")
 	flag.BoolVar(&version, "version", false, "Print version information")
 	flag.BoolVar(&skip, "s", false, "Skip confirmation message")
+	flag.IntVar(&BlockSize, "bs", 0, "Specify BlockSize for hashing; default 64 MB")
 	flag.BoolVar(&logon, "l", false, "Output log file to the scanned directory")
 	flag.StringVar(&logfile, "log", " ", "User defined log file")
 	flag.BoolVar(&skip_missing_files, "skip-missing", false, "Skip missing file scan")
@@ -48,17 +50,17 @@ func main() {
 	flag.Parse()
 
 	// Enable writing log to file
-	if logon == true {
+	if logon {
 		logging(path, noinfo, logon, logfile)
 	}
 
-	if version == true {
+	if version {
 		about_info()
 	} else if flag_help {
 		display_help()
 	} else if path != " " && dbcommand != "" {
 		path = filepath.Clean(path)
-		scan(path, skip, noinfo, logon, dbfile, skip_missing_files)
+		scan(path, skip, noinfo, logon, dbfile, skip_missing_files, BlockSize)
 	} else if len(dbcommand) > 0 {
 		// Start db tools
 		if dbfile == " " {
@@ -98,19 +100,22 @@ func logging(path string, noinfo bool, logon bool, logfile string) {
 
 	log.SetOutput(file)
 
-	if noinfo == true && logon == true {
+	if noinfo && logon {
 		log.Println("info: Scan started")
 	}
 
 }
 
-func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_missing_files bool) {
+func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_missing_files bool, BlockSize int) {
 
 	// Check the directory path if exists
 	if dir_exists(path) == 1 {
 		// Directory exists
-		if noinfo == false {
+		if !noinfo {
 			log.Println("info: scanning directory:", path)
+			if BlockSize > 0 {
+				log.Println("info: block size:", BlockSize)
+			}
 		}
 	} else {
 		// Does not exist
@@ -127,7 +132,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 	// Did user choose own path?
 	if dbfile != " " {
 		dbfile = filepath.Clean(dbfile)
-		if noinfo == false {
+		if !noinfo {
 			log.Print("info: db location specified ", dbfile)
 		}
 	} else {
@@ -139,7 +144,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 		// Double check with user just in case they
 		var choice string
 
-		if skip == true {
+		if skip {
 			// User specified -s so do not bother them with
 			// questions
 			choice = "y"
@@ -157,7 +162,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 			// file and contine
 			db_output := create_database(path, dbfile)
 			if db_output == 0 {
-				if noinfo == false {
+				if !noinfo {
 					log.Println("info: database file created")
 				}
 			} else {
@@ -169,7 +174,7 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 			}
 
 			// 0 means skip the missing file scan
-			start_scan(path, path_count, 0, noinfo, logon, dbfile, skip_missing_files)
+			start_scan(path, path_count, 0, noinfo, logon, dbfile, skip_missing_files, BlockSize)
 
 		case "n":
 			os.Exit(1)
@@ -185,26 +190,26 @@ func scan(path string, skip bool, noinfo bool, logon bool, dbfile string, skip_m
 		// function and tell not to do the missing file scan
 		// 1 sent through function to say do not run missing files
 
-		start_scan(path, path_count, 1, noinfo, logon, dbfile, skip_missing_files)
+		start_scan(path, path_count, 1, noinfo, logon, dbfile, skip_missing_files, BlockSize)
 
 	}
 
 }
 
-func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool, dbfile string, skip_missing_files bool) {
+func start_scan(path string, path_count int, look_missing int, noinfo bool, logon bool, dbfile string, skip_missing_files bool, BlockSize int) {
 
 	// Db file is new, so no point looking for
 	// missing files as this is first run on directory
 	// Send path to function and cycle through all files
 	// and directories to generate hashes
-	iterate(path, path_count, noinfo, dbfile, logon)
+	iterate(path, path_count, noinfo, dbfile, logon, BlockSize)
 
 	// Run a scan to check for missing files
 	// Only run is db was existing
 	// Skip is skip-missing flag given
-	if look_missing != 0 && skip_missing_files == false {
+	if look_missing != 0 && !skip_missing_files {
 
-		if noinfo == false {
+		if !noinfo {
 			log.Println("info: checking for missing files")
 		}
 
@@ -212,7 +217,7 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 
 	} else {
 
-		if noinfo == false {
+		if !noinfo {
 			log.Println("info: skipped missing file scan")
 		}
 
@@ -221,9 +226,9 @@ func start_scan(path string, path_count int, look_missing int, noinfo bool, logo
 	// Make backup
 	//backup_db(path)
 
-	if noinfo == false {
+	if !noinfo {
 		log.Println("info: finished")
-	} else if noinfo == true && logon == true {
+	} else if noinfo && logon {
 		log.Println("info: finished")
 	}
 
