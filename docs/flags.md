@@ -38,6 +38,14 @@ Example:
 
 	dfg -l -log /var/log/pictures.log -d /mnt/usb/pictures/
 
+### Block Size
+
+The default block size used to hash files is 64 MB. You can specify a custom block size, in MB.
+
+`-b 64`
+
+_Changing the block size does not affect existing hashes already saved in the database_
+
 ### Skip missing file scan
 
 `--skip-missing`
