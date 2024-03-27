@@ -69,14 +69,7 @@ func main() {
 		}
 
 		dbfile = filepath.Clean(dbfile)
-
-		if dbcommand == "del" {
-			db_tool_func(dbcommand, dbfile)
-		}
-
-		if dbcommand == "same" {
-			check_same_files(dbfile)
-		}
+		db_tool_func(dbcommand, dbfile)
 
 	} else {
 		log.Fatal("No options selected")

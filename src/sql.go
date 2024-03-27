@@ -307,30 +307,6 @@ func disable_sql_func(dbfile string, db_ID int) {
 
 }
 
-func disable_sql_do_func(dbfile string, db_ID int) {
-
-	// Execute update command to 'delete' row as defined by user
-
-	var db_path string
-	db_path = filepath.Clean(dbfile)
-	db, err := sql.Open("sqlite3", db_path)
-
-	if err != nil {
-		log.Fatal("fatal: could not connect to db", err)
-	}
-
-	defer db.Close()
-
-	_, err = db.Exec("UPDATE objects SET enabled = 0 WHERE objects.ID_object=?", db_ID)
-	// ERROR. DATABASE LOCKED???
-	if err != nil {
-		log.Fatal("error:", err)
-	}
-
-	fmt.Println("Delete request completed")
-
-}
-
 func check_same_files(dbfile string) {
 
 	// Query database for duplicate files
@@ -361,6 +337,58 @@ func check_same_files(dbfile string) {
 		var ID_object string
 		rows.Scan(&Duplicate_Hash, &path, &ID_object)
 		fmt.Println("("+Duplicate_Hash+")", path, "["+ID_object+"]")
+	}
+
+}
+
+func disable_sql_do_func(dbfile string, db_ID int) {
+
+	// Execute update command to 'delete' row as defined by user
+
+	var db_path string
+	db_path = filepath.Clean(dbfile)
+	db, err := sql.Open("sqlite3", db_path)
+
+	if err != nil {
+		log.Fatal("fatal: could not connect to db", err)
+	}
+
+	defer db.Close()
+
+	_, err = db.Exec("UPDATE objects SET enabled = 0 WHERE objects.ID_object=?", db_ID)
+	// ERROR. DATABASE LOCKED???
+	if err != nil {
+		log.Fatal("error:", err)
+	}
+
+	fmt.Println("Delete request completed")
+
+}
+
+func count_sql_func(dbfile string) {
+
+	// Query database for duplicate files
+
+	db, err := sql.Open("sqlite3", dbfile)
+
+	if err != nil {
+		log.Fatal("fatal: could not connect to db", err)
+	}
+
+	defer db.Close()
+
+	rows, err := db.Query("SELECT COUNT(*) AS TotalCount FROM objects WHERE objects.enabled = 1;")
+
+	if err != nil {
+		log.Fatal("error: database error")
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var TotalCount int
+		rows.Scan(&TotalCount)
+		fmt.Println("Total Records:", TotalCount)
 	}
 
 }
