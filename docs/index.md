@@ -15,11 +15,16 @@ Helps detect bitrot and early signs of media failure.
 
 For releases visit [this page](https://github.com/karlh001/defiant-fg/releases).
 
-* [Deb installer](https://github.com/karlh001/defiant-fg/tree/main/bin/deb_pkgs/) (Debian, Linux Mint, Ubuntu) for AMD64.
+* [Deb installer](https://github.com/karlh001/defiant-fg/tree/main/dist/dfg_amd64.deb) (Debian, Linux Mint, Ubuntu) for AMD64.
 
 Alternatively, [click here](https://github.com/karlh001/defiant-fg/archive/refs/heads/main.zip) to download then follow the [installation instructions](installation.md) to either build self or install non-DEB package.
 
-[Check hashes](hash.md) of download.
+
+## Hashes
+
+* [SHA256](https://github.com/karlh001/defiant-fg/tree/main/dist/hashes.sha256)
+* [MD5](https://github.com/karlh001/defiant-fg/tree/main/dist/hashes.md5)
+* [Whirlpool](https://github.com/karlh001/defiant-fg/tree/main/dist/hashes.whirlpool)
 
 ## Open Source
 

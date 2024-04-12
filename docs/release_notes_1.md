@@ -7,6 +7,7 @@
 * Block size flag `--bs` 
 * Minor code tidying
 * SQLite3 upgraded to version 1.14.22
+* Using GoReleaser to build DFG - download links changed
 
 ## Version 1.3
 
