@@ -46,15 +46,13 @@ Alternatively, download the release, extract and follow _Install_.
 
 ### Linux
  
-On a Debian-based operating system, such as Ubuntu or Linux Mint, download the deb installer located in the deb directory.
+* [Download deb package](https://github.com/karlh001/defiant-fg/raw/main/dist/dfg_amd64.deb)
+* [Download Linux binary](https://github.com/karlh001/defiant-fg/raw/main/dist/defiant-fg_linux_arm64/defiant-fg)
+* [More](https://github.com/karlh001/defiant-fg/tree/main/dist)
 
-On other Linux, run the install script as root.
+On a Debian-based operating system, such as Ubuntu or Linux Mint, download the deb installer located in the dist directory.
 
-	sudo sh build/INSTALL_LINUX.sh
-
-This script will copy necessary files so allow you to run in the command line:
-
-	dfg
+The binaries are available in the dist directory. Copy this to your bin directory to run. Alternatively, in the terminal run ./defiant-fg to execute the program.
 
 If you need to run another platform, please read the [build](build.md) guide.
 
