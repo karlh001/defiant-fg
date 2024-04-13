@@ -2,12 +2,12 @@
 
 ## Version 1.3.1
 
-2024-04-XX
+2024-04-13
 
 * Block size flag `--bs` 
 * Minor code tidying
 * SQLite3 upgraded to version 1.14.22
-* Using GoReleaser to build DFG - download links changed
+* Using GoReleaser to build DFG - download links changed / minor adjustment to project layout on GitHub
 
 ## Version 1.3
 
