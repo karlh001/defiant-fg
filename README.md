@@ -28,7 +28,7 @@ Or, via command line:
 
 Download
 
-	wget https://github.com/karlh001/defiant-fg/raw/main/bin/deb_pkgs/dfg_amd64.deb
+	wget https://github.com/karlh001/defiant-fg/raw/main/dist/dfg_amd64.deb
 
 Install (as root)
 
