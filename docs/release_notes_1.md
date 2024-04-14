@@ -1,5 +1,13 @@
 # Release Notes
 
+## Version 1.3.2
+
+2024-04-14
+
+* Fixed compile bug not allowing access to database
+* Upgraded to Go 1.22.2 to build application
+* Changed SQLite engine to modernc.org/sqlite version 1.29.6
+
 ## Version 1.3.1
 
 2024-04-13

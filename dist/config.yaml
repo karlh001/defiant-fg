@@ -9,8 +9,8 @@ builds:
   - id: defiant-fg
     goos:
       - linux
-      - windows
       - darwin
+      - windows
       - solaris
       - freebsd
       - openbsd
@@ -26,10 +26,10 @@ builds:
     targets:
       - linux_amd64_v1
       - linux_arm64
-      - windows_amd64_v1
-      - windows_arm64
       - darwin_amd64_v1
       - darwin_arm64
+      - windows_amd64_v1
+      - windows_arm64
       - solaris_amd64_v1
       - freebsd_amd64_v1
       - freebsd_arm64

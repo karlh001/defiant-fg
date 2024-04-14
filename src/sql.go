@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"github.com/TwiN/go-color"
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 // If database does not exist create new
@@ -34,7 +34,7 @@ func create_database(path string, dbfile string) int {
 		db_path = filepath.Join(path, db_name)
 	}
 
-	db, err := sql.Open("sqlite3", db_path)
+	db, err := sql.Open("sqlite", db_path)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
@@ -74,7 +74,7 @@ func create_database(path string, dbfile string) int {
 // and write to the SQLite3 database file
 func write_files_sql(path string, hashmap map[string]string, noinfo bool, dbfile string) int {
 
-	db, err := sql.Open("sqlite3", filepath.Join(dbfile))
+	db, err := sql.Open("sqlite", filepath.Join(dbfile))
 
 	if err != nil {
 		log.Fatal("error: Could not open db, msg: ", err)
@@ -136,7 +136,7 @@ func check_file_sql(short_path string, full_path string, hash string, dbfile str
 	}
 
 	// Open database
-	db, err := sql.Open("sqlite3", dbfile)
+	db, err := sql.Open("sqlite", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: at db open, msg: ", err)
@@ -190,7 +190,7 @@ func missing_files_scan(full_path string, dbfile string, logon bool) int {
 	// If in db but not in directory structure, warn user
 
 	// Open database
-	db, err := sql.Open("sqlite3", dbfile)
+	db, err := sql.Open("sqlite", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: at db open, msg: ", err)
@@ -262,7 +262,7 @@ func clean_string(filename string, do int) string {
 func disable_sql_func(dbfile string, db_ID int) {
 	var db_path string
 	db_path = filepath.Clean(dbfile)
-	db, err := sql.Open("sqlite3", db_path)
+	db, err := sql.Open("sqlite", db_path)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
@@ -311,7 +311,7 @@ func check_same_files(dbfile string) {
 
 	// Query database for duplicate files
 
-	db, err := sql.Open("sqlite3", dbfile)
+	db, err := sql.Open("sqlite", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
@@ -347,7 +347,7 @@ func disable_sql_do_func(dbfile string, db_ID int) {
 
 	var db_path string
 	db_path = filepath.Clean(dbfile)
-	db, err := sql.Open("sqlite3", db_path)
+	db, err := sql.Open("sqlite", db_path)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
@@ -369,7 +369,7 @@ func count_sql_func(dbfile string) {
 
 	// Query database for duplicate files
 
-	db, err := sql.Open("sqlite3", dbfile)
+	db, err := sql.Open("sqlite", dbfile)
 
 	if err != nil {
 		log.Fatal("fatal: could not connect to db", err)
